@@ -1,0 +1,110 @@
+#!/bin/sh
+# Guest-side MPAM verification, v2: covers the linux_old1 (mainline arm_mpam)
+# PRI / MIN / MAX pseudo-resources, CDP and the L2 monitors, on top of the
+# v1 narrow-PARTID core checks. Kernel-agnostic where possible: unknown
+# resources fail their write and the verdict decides what is required.
+#
+# Ordering note: the CDP section remounts resctrl (which resets schemata),
+# so it runs BEFORE the write matrix — the final schemata state is what the
+# host-side MSC recon must observe.
+/bin/busybox --install -s /bin 2>/dev/null
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+echo "=== MARKER:USERSPACE-UP ==="
+echo "=== [1] MSCs + resctrl mount (-o l2) ==="
+ls /sys/bus/platform/devices/ | grep mpam_msc
+mkdir -p /sys/fs/resctrl
+mount -t resctrl resctrl /sys/fs/resctrl -o l2 && echo "RESCTRL-MOUNT-OK l2" || {
+  mount -t resctrl resctrl /sys/fs/resctrl && echo "RESCTRL-MOUNT-OK plain"
+}
+echo "=== [2] resource info ==="
+echo "L3/num_closids: $(cat /sys/fs/resctrl/info/L3/num_closids 2>/dev/null)"
+echo "L2/num_closids: $(cat /sys/fs/resctrl/info/L2/num_closids 2>/dev/null)"
+echo "L3_MON/num_rmids: $(cat /sys/fs/resctrl/info/L3_MON/num_rmids 2>/dev/null)"
+echo "L2_MON/num_rmids: $(cat /sys/fs/resctrl/info/L2_MON/num_rmids 2>/dev/null)"
+echo "L3_MON/mon_features: $(cat /sys/fs/resctrl/info/L3_MON/mon_features 2>/dev/null | tr '\n' ' ')"
+echo "L2_MON/mon_features: $(cat /sys/fs/resctrl/info/L2_MON/mon_features 2>/dev/null | tr '\n' ' ')"
+echo "L3/cbm_mask: $(cat /sys/fs/resctrl/info/L3/cbm_mask 2>/dev/null)"
+L3ID=33751040
+L2ID=$(cat /sys/fs/resctrl/schemata 2>/dev/null | sed -n 's/.*L2:\([0-9]*\)=.*/\1/p' | head -1)
+[ -n "$L2ID" ] || L2ID=33685504
+echo "domain ids: L3=$L3ID L2=$L2ID"
+echo "=== [3] CDP ==="
+umount /sys/fs/resctrl
+mount -t resctrl resctrl /sys/fs/resctrl -o cdp,l2 && echo "CDP-MOUNT-OK l2" \
+  || { mount -t resctrl resctrl /sys/fs/resctrl -o cdp && echo "CDP-MOUNT-OK"; }
+echo "CDP L3DATA/num_closids: $(cat /sys/fs/resctrl/info/L3DATA/num_closids 2>/dev/null)"
+echo "CDP L3_MON/num_rmids: $(cat /sys/fs/resctrl/info/L3_MON/num_rmids 2>/dev/null)"
+printf "L3CODE:$L3ID=ffff;\nL3DATA:$L3ID=55555555;\n" > /sys/fs/resctrl/schemata 2>/dev/null \
+  && echo "CDP-WRITE-OK" || echo "CDP-WRITE-FAIL"
+cat /sys/fs/resctrl/schemata 2>/dev/null | sed 's/^/CDP-SCHEMATA: /'
+umount /sys/fs/resctrl
+if mount -t resctrl resctrl /sys/fs/resctrl -o l2; then echo "REMOUNT-OK"
+else mount -t resctrl resctrl /sys/fs/resctrl && echo "REMOUNT-OK plain"; fi
+echo "=== [4] schemata write matrix ==="
+try() {
+  printf "$1" > /sys/fs/resctrl/schemata 2>/dev/null && echo "WRITE-OK   [$1]" || echo "WRITE-FAIL [$1]"
+  echo "  last_cmd_status: $(cat /sys/fs/resctrl/info/last_cmd_status 2>/dev/null)"
+}
+sleep 3
+try "L3:$L3ID=55555555;\n"
+try "L3PRI:$L3ID=2;\n"
+try "L3MIN:$L3ID=25;\n"
+try "L3MAX:$L3ID=50;\n"
+try "L2:$L2ID=0000ffff;\n"
+try "L2PRI:$L2ID=1;\n"
+try "L2MIN:$L2ID=25;\n"
+try "L2MAX:$L2ID=50;\n"
+try "MB:0=00000080;\n"
+try "MB:$L3ID=25;\n"
+try "MBPRI:$L3ID=1;\n"
+try "MBMIN:$L3ID=25;\n"
+try "MBOPT:$L3ID=8191;\n"
+try "MBHDL:$L3ID=1;\n"
+# OLK-6.6 MBA uses a hex fraction on domain 0; re-apply a 25% clamp so the
+# MBWU counter check has a known budget (mainline pseudo writes own MBW_MAX).
+case "$(uname -r)" in
+  6.6*)
+    printf 'MB:0=00000040;\n' > /sys/fs/resctrl/schemata 2>/dev/null && echo "MB-CLAMP-25"
+    ;;
+esac
+echo "--- final schemata readback ---"
+OUT=$(cat /sys/fs/resctrl/schemata 2>/dev/null)
+if [ -n "$OUT" ]; then echo "$OUT" | sed 's/^/SCHEMATA: /'; else echo "SCHEMATA: <unreadable — resctrl not mounted?>"; fi
+echo "=== [5] mon sampling (L3 CBM=50% -> CSU occupancy ~16MiB) ==="
+# OLK-6.6: counter reads come back empty after the CDP remount churn; start
+# the sampling from a fresh plain mount with the clamp re-applied (v1 flow).
+case "$(uname -r)" in
+  6.6*)
+    umount /sys/fs/resctrl 2>/dev/null
+    if mount -t resctrl resctrl /sys/fs/resctrl 2>/dev/null; then
+      echo "OLK-FRESH-MOUNT"
+      printf "L3:$L3ID=55555555;\n" > /sys/fs/resctrl/schemata 2>/dev/null
+      printf 'MB:0=00000040;\n' > /sys/fs/resctrl/schemata 2>/dev/null && echo "MB-CLAMP-25"
+    fi
+    ;;
+esac
+echo "mon_data tree:"
+ls /sys/fs/resctrl/mon_data/ 2>/dev/null | sed 's/^/  MONDIR: /'
+for d in /sys/fs/resctrl/mon_data/mon_L3_* /sys/fs/resctrl/mon_data/mon_L2_*; do
+  [ -d "$d" ] || continue
+  echo "--- $d ---"
+  ls "$d" | sed "s|^|  FILE: |"
+  for f in $(ls "$d" 2>/dev/null); do
+    A=$(cat "$d/$f" 2>/dev/null); sleep 2; B=$(cat "$d/$f" 2>/dev/null)
+    case "$A" in *Unavailable*|*Unassigned*|*Error*) D=0;; *) D=$((B-A));; esac
+    echo "$(basename $d)/$f: $A -> $B (delta $D)"
+  done
+done
+echo "L3_MON info files:"
+ls /sys/fs/resctrl/info/L3_MON/ 2>/dev/null | sed 's/^/  L3MONFILE: /'
+for f in mbm_assign_mode mbm_assign_on_mkdir; do
+  [ -e "/sys/fs/resctrl/info/L3_MON/$f" ] && echo "L3_MON/$f: $(cat /sys/fs/resctrl/info/L3_MON/$f)"
+done
+echo "=== [6] mpam dmesg ==="
+dmesg | grep -iE "mpam|resctrl|cdp" | tail -80
+echo "=== [7] /proc/interrupts (mpam error/overflow GSIV wiring) ==="
+cat /proc/interrupts 2>/dev/null | sed 's/^/IRQ: /'
+echo "=== MARKER:DONE ==="
+sleep 7200

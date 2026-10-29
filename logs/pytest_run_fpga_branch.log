@@ -1,0 +1,2996 @@
+UEFI firmware (version 2024.02-2ubuntu0.10 built at 15:40:28 on Sep 23 2026)
+[2J[01;01H[=3h[2J[01;01H[2J[01;01H[=3h[2J[01;01H[    0.000000][    T0] Booting Linux on physical CPU 0x0000000000 [0x000f0510]
+[    0.000000][    T0] Linux version 7.3.0-rc6mpam_expert_test+ (root@r00799764-ThinkCentre-M920t-N000) (aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #16 SMP PREEMPT Fri Oct 16 16:33:39 CST 2026
+[    0.000000][    T0] KASLR enabled
+[    0.000000][    T0] earlycon: pl11 MMIO:0x0000000009000000 (options '')
+[    0.000000][    T0] printk: legacy bootconsole [pl11] enabled
+[    0.000000][    T0] efi: EFI v2.7 by Ubuntu distribution of EDK II
+[    0.000000][    T0] efi: SMBIOS 3.0=0x13fed0000 MEMATTR=0x13c755018 ACPI 2.0=0x13b1e0018 INITRD=0x13b1dff18 MEMRESERVE=0x13b1dff98 
+[    0.000000][    T0] ACPI: Early table checksum verification disabled
+[    0.000000][    T0] ACPI: RSDP 0x000000013B1E0018 000024 (v02 BOCHS )
+[    0.000000][    T0] ACPI: XSDT 0x000000013B1EFE98 000074 (v01 BOCHS  BXPC     00000001      01000013)
+[    0.000000][    T0] ACPI: FACP 0x000000013B1EFA98 000114 (v06 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: DSDT 0x000000013B1E7518 0015A3 (v02 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: APIC 0x000000013B1ED898 0002E8 (v04 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: PPTT 0x000000013B1EDC98 000374 (v03 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: GTDT 0x000000013B1EE718 000068 (v03 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: MPAM 0x000000013B1EFC18 0001A4 (v01 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: MCFG 0x000000013B1EFF98 00003C (v01 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: SPCR 0x000000013B1EE818 000050 (v02 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: DBG2 0x000000013B1EE898 000057 (v00 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: SRAT 0x000000013B1EE098 0000E8 (v03 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: IORT 0x000000013B1EE618 000080 (v05 BOCHS  BXPC     00000001 BXPC 00000001)
+[    0.000000][    T0] ACPI: SPCR: console: pl011,mmio32,0x9000000,9600
+[    0.000000][    T0] ACPI: SRAT: Node 0 PXM 0 [mem 0x40000000-0x13fffffff]
+[    0.000000][    T0] NODE_DATA(0) allocated [mem 0x13f410200-0x13f41cfff]
+[    0.000000][    T0] psci: probing for conduit method from ACPI.
+[    0.000000][    T0] psci: PSCIv1.1 detected in firmware.
+[    0.000000][    T0] psci: Using standard PSCI v0.2 function IDs
+[    0.000000][    T0] psci: Trusted OS migration not required
+[    0.000000][    T0] psci: SMC Calling Convention v1.0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x0 -> Node 0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x1 -> Node 0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x2 -> Node 0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x3 -> Node 0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x4 -> Node 0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x5 -> Node 0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x6 -> Node 0
+[    0.000000][    T0] ACPI: NUMA: SRAT: PXM 0 -> MPIDR 0x7 -> Node 0
+[    0.000000][    T0] Zone ranges:
+[    0.000000][    T0]   DMA      [mem 0x0000000040000000-0x00000000ffffffff]
+[    0.000000][    T0]   DMA32    empty
+[    0.000000][    T0]   Normal   [mem 0x0000000100000000-0x000000013fffffff]
+[    0.000000][    T0]   Device   empty
+[    0.000000][    T0] Movable zone start for each node
+[    0.000000][    T0] Early memory node ranges
+[    0.000000][    T0]   node   0: [mem 0x0000000040000000-0x000000013c3effff]
+[    0.000000][    T0]   node   0: [mem 0x000000013c3f0000-0x000000013c72ffff]
+[    0.000000][    T0]   node   0: [mem 0x000000013c730000-0x000000013fbfffff]
+[    0.000000][    T0]   node   0: [mem 0x000000013fc00000-0x000000013ffdffff]
+[    0.000000][    T0]   node   0: [mem 0x000000013ffe0000-0x000000013fffffff]
+[    0.000000][    T0] Initmem setup node 0 [mem 0x0000000040000000-0x000000013fffffff]
+[    0.000000][    T0] percpu: Embedded 36 pages/cpu s109016 r8192 d30248 u147456
+[    0.000000][    T0] Detected PIPT I-cache on CPU0
+[    0.000000][    T0] CPU features: detected: Address authentication (IMP DEF algorithm)
+[    0.000000][    T0] CPU features: detected: GICv3 CPU interface
+[    0.000000][    T0] CPU features: detected: HCRX_EL2 register
+[    0.000000][    T0] CPU features: detected: Stage-1 Permission Indirection Extension (S1PIE)
+[    0.000000][    T0] CPU features: detected: Spectre-v4
+[    0.000000][    T0] alternatives: applying boot alternatives
+[    0.000000][    T0] Kernel command line: console=ttyAMA0 earlycon=pl011,0x09000000 rdinit=/init initrd=initrd
+[    0.000000][    T0] random: crng init done
+[    0.000000][    T0] printk: log buffer data + meta data: 1048576 + 4456448 = 5505024 bytes
+[    0.000000][    T0] Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+[    0.000000][    T0] Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+[    0.000000][    T0] software IO TLB: area num 8.
+[    0.000000][    T0] software IO TLB: mapped [mem 0x00000000fbfff000-0x00000000fffff000] (64MB)
+[    0.000000][    T0] Fallback order for Node 0: 0 
+[    0.000000][    T0] Built 1 zonelists, mobility grouping on.  Total pages: 1048576
+[    0.000000][    T0] Policy zone: Normal
+[    0.000000][    T0] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000][    T0] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1
+[    0.000000][    T0] ftrace: allocating 51662 entries in 204 pages
+[    0.000000][    T0] ftrace: allocated 204 pages with 4 groups
+[    0.000000][    T0] rcu: Hierarchical RCU implementation.
+[    0.000000][    T0] rcu: 	RCU restricting CPUs from NR_CPUS=4096 to nr_cpu_ids=8.
+[    0.000000][    T0] 	Trampoline variant of Tasks RCU enabled.
+[    0.000000][    T0] 	Rude variant of Tasks RCU enabled.
+[    0.000000][    T0] 	Tracing variant of Tasks RCU enabled.
+[    0.000000][    T0] rcu: RCU calculated value of scheduler-enlistment delay is 3 jiffies.
+[    0.000000][    T0] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=8
+[    0.000000][    T0] RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=8.
+[    0.000000][    T0] RCU Tasks Rude: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=8.
+[    0.000000][    T0] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000][    T0] GICv3: 256 SPIs implemented
+[    0.000000][    T0] GICv3: 0 Extended SPIs implemented
+[    0.000000][    T0] Root IRQ handler: gic_handle_irq
+[    0.000000][    T0] GICv3: GICv3 features: 16 PPIs
+[    0.000000][    T0] GICv3: GICD_CTLR.DS=1, SCR_EL3.FIQ=0
+[    0.000000][    T0] GICv3: CPU0: found redistributor 0 region 0:0x00000000080a0000
+[    0.000000][    T0] ITS [mem 0x08080000-0x0809ffff]
+[    0.000000][    T0] ITS@0x0000000008080000: allocated 8192 Devices @100250000 (indirect, esz 8, psz 64K, shr 1)
+[    0.000000][    T0] ITS@0x0000000008080000: allocated 8192 Interrupt Collections @100260000 (flat, esz 8, psz 64K, shr 1)
+[    0.000000][    T0] GICv3: using LPI property table @0x0000000100270000
+[    0.000000][    T0] GICv3: CPU0: using allocated LPI pending table @0x0000000100280000
+[    0.000000][    T0] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000][    T0] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 59726888946093750 ns
+[    0.000000][    T0] arch_timer: cp15 timer running at 1000.00MHz (virt).
+[    0.000000][    T0] clocksource: arch_sys_counter: mask: 0x1fffffffffffffff max_cycles: 0x1cd42e4dffb, max_idle_ns: 881590591483 ns
+[    0.000082][    T0] sched_clock: 61 bits at 1000MHz, resolution 1ns, wraps every 4398046511103ns
+[    0.021631][    T0] Console: colour dummy device 80x25
+[    0.028890][    T0] ACPI: Core revision 20260408
+[    0.042294][    T0] Calibrating delay loop (skipped), value calculated using timer frequency.. 2000.20 BogoMIPS (lpj=31250000)
+[    0.043270][    T0] pid_max: default: 32768 minimum: 301
+[    0.050619][    T0] landlock: Up and running.
+[    0.050880][    T0] Yama: becoming mindful.
+[    0.051508][    T0] SELinux:  Initializing.
+[    0.075055][    T0] LSM support for eBPF active
+[    0.087900][    T0] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.088255][    T0] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.104245][    T0] VFS: Finished mounting rootfs on nullfs
+[    0.161432][    T1] rcu: Hierarchical SRCU implementation.
+[    0.162344][    T1] rcu: 	Max phase no-delay instances is 1000.
+[    0.164450][    T1] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    0.172288][    T1] Remapping and enabling EFI services.
+[    0.179267][    T1] smp: Bringing up secondary CPUs ...
+[    0.187518][    T0] Detected PIPT I-cache on CPU1
+[    0.190198][    T0] GICv3: CPU1: found redistributor 1 region 0:0x00000000080c0000
+[    0.191439][    T0] GICv3: CPU1: using allocated LPI pending table @0x0000000100290000
+[    0.194181][    T0] CPU1: Booted secondary processor 0x0000000001 [0x000f0510]
+[    0.203800][    T0] Detected PIPT I-cache on CPU2
+[    0.204009][    T0] GICv3: CPU2: found redistributor 2 region 0:0x00000000080e0000
+[    0.204244][    T0] GICv3: CPU2: using allocated LPI pending table @0x00000001002a0000
+[    0.204904][    T0] CPU2: Booted secondary processor 0x0000000002 [0x000f0510]
+[    0.208377][    T0] Detected PIPT I-cache on CPU3
+[    0.208585][    T0] GICv3: CPU3: found redistributor 3 region 0:0x0000000008100000
+[    0.208829][    T0] GICv3: CPU3: using allocated LPI pending table @0x00000001002b0000
+[    0.209608][    T0] CPU3: Booted secondary processor 0x0000000003 [0x000f0510]
+[    0.212868][    T0] Detected PIPT I-cache on CPU4
+[    0.213083][    T0] GICv3: CPU4: found redistributor 4 region 0:0x0000000008120000
+[    0.213325][    T0] GICv3: CPU4: using allocated LPI pending table @0x00000001002c0000
+[    0.214397][    T0] CPU4: Booted secondary processor 0x0000000004 [0x000f0510]
+[    0.217337][    T0] Detected PIPT I-cache on CPU5
+[    0.217512][    T0] GICv3: CPU5: found redistributor 5 region 0:0x0000000008140000
+[    0.217748][    T0] GICv3: CPU5: using allocated LPI pending table @0x00000001002d0000
+[    0.218860][    T0] CPU5: Booted secondary processor 0x0000000005 [0x000f0510]
+[    0.222640][    T0] Detected PIPT I-cache on CPU6
+[    0.222851][    T0] GICv3: CPU6: found redistributor 6 region 0:0x0000000008160000
+[    0.223093][    T0] GICv3: CPU6: using allocated LPI pending table @0x00000001002e0000
+[    0.224392][    T0] CPU6: Booted secondary processor 0x0000000006 [0x000f0510]
+[    0.227358][    T0] Detected PIPT I-cache on CPU7
+[    0.227552][    T0] GICv3: CPU7: found redistributor 7 region 0:0x0000000008180000
+[    0.227788][    T0] GICv3: CPU7: using allocated LPI pending table @0x00000001002f0000
+[    0.229219][    T0] CPU7: Booted secondary processor 0x0000000007 [0x000f0510]
+[    0.230777][    T1] smp: Brought up 1 node, 8 CPUs
+[    0.235194][    T1] SMP: Total of 8 processors activated.
+[    0.235374][    T1] CPU: All CPU(s) started at EL1
+[    0.236087][    T1] CPU features: detected: 32-bit EL0 Support
+[    0.236350][    T1] CPU features: detected: ARMv8.4 Translation Table Level
+[    0.236550][    T1] CPU features: detected: Instruction cache invalidation not required for I/D coherence
+[    0.236805][    T1] CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+[    0.237077][    T1] CPU features: detected: Common not Private translations
+[    0.237254][    T1] CPU features: detected: CRC32 instructions
+[    0.237405][    T1] CPU features: detected: Data cache clean to Point of Deep Persistence
+[    0.237602][    T1] CPU features: detected: Data cache clean to Point of Persistence
+[    0.237798][    T1] CPU features: detected: Data independent timing control (DIT)
+[    0.237988][    T1] CPU features: detected: E0PD
+[    0.238114][    T1] CPU features: detected: Enhanced Counter Virtualization
+[    0.238285][    T1] CPU features: detected: Enhanced Counter Virtualization (CNTPOFF)
+[    0.238474][    T1] CPU features: detected: Enhanced Privileged Access Never
+[    0.238648][    T1] CPU features: detected: Enhanced Virtualization Traps
+[    0.238824][    T1] CPU features: detected: FPMR
+[    0.238950][    T1] CPU features: detected: Fine Grained Traps
+[    0.239127][    T1] CPU features: detected: Guarded Control Stack (GCS)
+[    0.239359][    T1] CPU features: detected: Generic authentication (IMP DEF algorithm)
+[    0.239765][    T1] CPU features: detected: RCpc load-acquire (LDAPR)
+[    0.239986][    T1] CPU features: detected: 52-bit Virtual Addressing for KVM (LPA2)
+[    0.240180][    T1] CPU features: detected: LSE atomic instructions
+[    0.240341][    T1] CPU features: detected: Memory Copy and Memory Set instructions
+[    0.240528][    T1] CPU features: detected: Privileged Access Never
+[    0.240740][    T1] CPU features: detected: PMUv3
+[    0.240956][    T1] CPU features: detected: SCTLR2
+[    0.241095][    T1] CPU features: detected: RAS Extension Support
+[    0.241352][    T1] CPU features: detected: Random Number Generator
+[    0.241517][    T1] CPU features: detected: Speculation barrier (SB)
+[    0.241678][    T1] CPU features: detected: Stage-2 Force Write-Back
+[    0.241849][    T1] CPU features: detected: Trap EL0 IMPLEMENTATION DEFINED functionality
+[    0.242050][    T1] CPU features: detected: TLB range maintenance instructions
+[    0.242227][    T1] CPU features: detected: WFx with timeout
+[    0.242373][    T1] CPU features: detected: XNX
+[    0.242562][    T1] CPU features: detected: Memory Partitioning And Monitoring
+[    0.242791][    T1] CPU features: detected: Scalable Matrix Extension
+[    0.242959][    T1] CPU features: detected: FA64
+[    0.243085][    T1] CPU features: detected: SME2
+[    0.243210][    T1] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[    0.243397][    T1] CPU features: detected: Scalable Vector Extension
+[    0.277435][    T1] alternatives: applying system-wide alternatives
+[    0.304973][    T1] CPU features: detected: Hardware dirty bit management on CPU0-7
+[    0.306115][    T1] SVE: maximum available vector length 256 bytes per vector
+[    0.306347][    T1] SVE: default vector length 64 bytes per vector
+[    0.306639][    T1] SME: minimum available vector length 16 bytes per vector
+[    0.306948][    T1] SME: maximum available vector length 256 bytes per vector
+[    0.307155][    T1] SME: default vector length 32 bytes per vector
+[    0.328027][    T1] Memory: 3963936K/4194304K available (16256K kernel code, 6326K rwdata, 6904K rodata, 6720K init, 10744K bss, 220580K reserved, 0K cma-reserved)
+[    0.362156][    T1] devtmpfs: initialized
+[    0.391669][    T1] posixtimers hash table entries: 4096 (order: 4, 65536 bytes, linear)
+[    0.392874][    T1] futex hash table entries: 2048 (131072 bytes on 1 NUMA nodes, total 128 KiB, linear).
+[    0.395146][    T1] 2G module region forced by RANDOMIZE_MODULE_REGION_FULL
+[    0.395388][    T1] 0 pages in range for non-PLT usage
+[    0.395467][    T1] 512464 pages in range for PLT usage
+[    0.418289][    T1] DMI: SMBIOS 3.0.0 present.
+[    0.418821][    T1] DMI: QEMU QEMU Virtual Machine, BIOS 2024.02-2ubuntu0.10 09/23/2026
+[    0.419308][    T1] DMI: Memory slots populated: 1/1
+[    0.448836][    T1] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.458058][    T1] DMA: preallocated 512 KiB GFP_KERNEL pool for atomic allocations
+[    0.458826][    T1] DMA: preallocated 512 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.459410][    T1] audit: initializing netlink subsys (disabled)
+[    0.462879][   T60] audit: type=2000 audit(0.437:1): state=initialized audit_enabled=0 res=1
+[    0.467550][    T1] thermal_sys: Registered thermal governor 'fair_share'
+[    0.467636][    T1] thermal_sys: Registered thermal governor 'step_wise'
+[    0.467843][    T1] thermal_sys: Registered thermal governor 'user_space'
+[    0.469929][    T1] cpuidle: using governor menu
+[    0.472405][    T1] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.475092][    T1] ASID allocator initialised with 65536 entries
+[    0.478439][    T1] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+[    0.479855][    T1] Serial: AMBA PL011 UART driver
+[    0.491020][    T1] HugeTLB: registered 1.00 GiB page size, pre-allocated 0 pages
+[    0.491267][    T1] HugeTLB: 0 KiB vmemmap can be freed for a 1.00 GiB page
+[    0.491482][    T1] HugeTLB: registered 32.0 MiB page size, pre-allocated 0 pages
+[    0.491675][    T1] HugeTLB: 0 KiB vmemmap can be freed for a 32.0 MiB page
+[    0.491881][    T1] HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pages
+[    0.492072][    T1] HugeTLB: 0 KiB vmemmap can be freed for a 2.00 MiB page
+[    0.492254][    T1] HugeTLB: registered 64.0 KiB page size, pre-allocated 0 pages
+[    0.492606][    T1] HugeTLB: 0 KiB vmemmap can be freed for a 64.0 KiB page
+[    0.511378][    T1] ACPI: Added _OSI(Module Device)
+[    0.511601][    T1] ACPI: Added _OSI(Processor Device)
+[    0.511763][    T1] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.533532][    T1] ACPI: 1 ACPI AML tables successfully acquired and loaded
+[    0.581297][    T1] ACPI: \_SB_: platform _OSC: OS support mask [006e6efe]
+[    0.583547][    T1] ACPI: Interpreter enabled
+[    0.583742][    T1] ACPI: Using GIC for interrupt routing
+[    0.586664][    T1] ACPI: MCFG table detected, 1 entries
+[    0.637589][    T1] ACPI: CPU0 has been hot-added
+[    0.638749][    T1] ACPI: CPU1 has been hot-added
+[    0.639392][    T1] ACPI: CPU2 has been hot-added
+[    0.640050][    T1] ACPI: CPU3 has been hot-added
+[    0.640653][    T1] ACPI: CPU4 has been hot-added
+[    0.641258][    T1] ACPI: CPU5 has been hot-added
+[    0.641868][    T1] ACPI: CPU6 has been hot-added
+[    0.642489][    T1] ACPI: CPU7 has been hot-added
+[    0.656711][    T1] ARMH0011:00: ttyAMA0 MMIO32:0x0000000009000000 (irq = 12, base_baud = 0) is a SBSA
+[    0.658895][    T1] printk: console [ttyAMA0] enabled
+[    0.658895][    T1] printk: console [ttyAMA0] enabled
+[    0.660222][    T1] printk: legacy bootconsole [pl11] disabled
+[    0.660222][    T1] printk: legacy bootconsole [pl11] disabled
+[    0.694394][    T1] ACPI: PCI: Interrupt link L000 configured for IRQ 35
+[    0.694738][    T1] ACPI: PCI: Interrupt link L001 configured for IRQ 36
+[    0.694842][    T1] ACPI: PCI: Interrupt link L002 configured for IRQ 37
+[    0.694939][    T1] ACPI: PCI: Interrupt link L003 configured for IRQ 38
+[    0.695465][    T1] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+[    0.697381][    T1] acpi PNP0A08:00: _OSC: OS supports [ExtendedConfig ASPM ClockPM Segments MSI EDR HPX-Type3]
+[    0.703006][    T1] acpi PNP0A08:00: _OSC: platform does not support [LTR DPC]
+[    0.704436][    T1] acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug SHPCHotplug PME AER PCIeCapability]
+[    0.708441][    T1] acpi PNP0A08:00: ECAM area [mem 0x4010000000-0x401fffffff] reserved by PNP0C02:00
+[    0.708916][    T1] acpi PNP0A08:00: ECAM at [mem 0x4010000000-0x401fffffff] for [bus 00-ff]
+[    0.710122][    T1] ACPI: Remapped I/O 0x000000003eff0000 to [io  0x0000-0xffff window]
+[    0.715353][    T1] PCI host bridge to bus 0000:00
+[    0.715923][    T1] pci_bus 0000:00: root bus resource [mem 0x10000000-0x3efeffff window]
+[    0.715986][    T1] pci_bus 0000:00: root bus resource [io  0x0000-0xffff window]
+[    0.716016][    T1] pci_bus 0000:00: root bus resource [mem 0x8000000000-0xffffffffff window]
+[    0.716158][    T1] pci_bus 0000:00: root bus resource [bus 00-ff]
+[    0.717886][    T1] pci 0000:00:00.0: [1b36:0008] type 00 class 0x060000 conventional PCI endpoint
+[    0.726081][    T1] pci 0000:00:01.0: [1af4:1000] type 00 class 0x020000 conventional PCI endpoint
+[    0.726390][    T1] pci 0000:00:01.0: BAR 0 [io  0x0000-0x001f]
+[    0.726443][    T1] pci 0000:00:01.0: BAR 1 [mem 0x10040000-0x10040fff]
+[    0.726504][    T1] pci 0000:00:01.0: BAR 4 [mem 0x8000000000-0x8000003fff 64bit pref]
+[    0.726635][    T1] pci 0000:00:01.0: ROM [mem 0xfffc0000-0xffffffff pref]
+[    0.729610][    T1] pci 0000:00:01.0: ROM [mem 0x10000000-0x1003ffff pref]: assigned
+[    0.729906][    T1] pci 0000:00:01.0: BAR 4 [mem 0x8000000000-0x8000003fff 64bit pref]: assigned
+[    0.730117][    T1] pci 0000:00:01.0: BAR 1 [mem 0x10040000-0x10040fff]: assigned
+[    0.730176][    T1] pci 0000:00:01.0: BAR 0 [io  0x1000-0x101f]: assigned
+[    0.730590][    T1] pci_bus 0000:00: resource 4 [mem 0x10000000-0x3efeffff window]
+[    0.730641][    T1] pci_bus 0000:00: resource 5 [io  0x0000-0xffff window]
+[    0.730669][    T1] pci_bus 0000:00: resource 6 [mem 0x8000000000-0xffffffffff window]
+[    0.736932][    T1] iommu: Default domain type: Translated
+[    0.736988][    T1] iommu: DMA domain TLB invalidation policy: lazy mode
+[    0.742998][    T1] SCSI subsystem initialized
+[    0.745058][    T1] ACPI: bus type USB registered
+[    0.745815][    T1] usbcore: registered new interface driver usbfs
+[    0.746273][    T1] usbcore: registered new interface driver hub
+[    0.746486][    T1] usbcore: registered new device driver usb
+[    0.747019][    T1] pps_core: LinuxPPS API ver. 1 registered
+[    0.747043][    T1] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.747137][    T1] PTP clock support registered
+[    0.749767][    T1] EDAC MC: Ver: 3.0.0
+[    0.754356][    T1] efivars: Registered efivars operations
+[    0.775168][    T1] NetLabel: Initializing
+[    0.775218][    T1] NetLabel:  domain hash size = 128
+[    0.775241][    T1] NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+[    0.777097][    T1] NetLabel:  unlabeled traffic allowed by default
+[    0.778584][    T1] vgaarb: loaded
+[    0.798569][    T1] clocksource: Switched to clocksource arch_sys_counter
+[    0.802899][    T1] VFS: Disk quotas dquot_6.6.0
+[    0.803125][    T1] VFS: Dquot-cache hash table entries: 512 (4096 bytes)
+[    0.811978][    T1] acpi PNP0C02:00: Could not reserve [mem 0x4010000000-0x401fffffff window]
+[    0.812754][    T1] pnp: PnP ACPI init
+[    0.814365][    T1] pnp: PnP ACPI: found 0 devices
+[    0.860404][    T1] NET: Registered PF_INET protocol family
+[    0.862959][    T1] IP idents hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.875598][    T1] tcp_listen_portaddr_hash hash table entries: 2048 (order: 3, 32768 bytes, linear)
+[    0.875725][    T1] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.875828][    T1] TCP established hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[    0.876236][    T1] TCP bind hash table entries: 32768 (order: 8, 1048576 bytes, linear)
+[    0.876763][    T1] TCP: Hash tables configured (established 32768 bind 32768)
+[    0.879666][    T1] MPTCP token hash table entries: 4096 (order: 5, 98304 bytes, linear)
+[    0.880349][    T1] UDP hash table entries: 2048 (order: 5, 131072 bytes, linear)
+[    0.883239][    T1] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.884150][    T1] NET: Registered PF_XDP protocol family
+[    0.884679][    T1] PCI: CLS 0 bytes, default 64
+[    0.890550][   T12] Trying to unpack rootfs image as initramfs...
+[    0.926427][    T1] kvm [1]: HYP mode not available
+[    0.933623][    T1] Initialise system trusted keyrings
+[    0.936130][    T1] Key type blacklist registered
+[    0.937511][    T1] workingset: timestamp_bits=38 (anon: 33) max_order=20 bucket_order=0 (anon: 0)
+[    0.948805][    T1] integrity: Platform Keyring initialized
+[    1.012030][    T1] NET: Registered PF_ALG protocol family
+[    1.012469][    T1] Key type asymmetric registered
+[    1.012703][    T1] Asymmetric key parser 'x509' registered
+[    1.013072][    T1] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+[    1.014657][    T1] io scheduler mq-deadline registered
+[    1.014764][    T1] io scheduler kyber registered
+[    1.015129][    T1] io scheduler bfq registered
+[    1.030260][    T1] input: Power Button as /devices/platform/PNP0C0C:00/input/input0
+[    1.031938][    T1] ACPI: button: Power Button [PWRB]
+[    1.086711][    T1] Serial: 8250/16550 driver, 4 ports, IRQ sharing enabled
+[    1.113085][    T1] rdac: device handler registered
+[    1.114073][    T1] hp_sw: device handler registered
+[    1.114128][    T1] emc: device handler registered
+[    1.114829][    T1] alua: device handler registered
+[    1.126158][    T1] mousedev: PS/2 mouse device common for all mice
+[    1.132957][    T1] rtc-efi rtc-efi.0: registered as rtc0
+[    1.134050][    T1] rtc-efi rtc-efi.0: setting system clock to 2026-10-16T11:20:15 UTC (1792149615)
+[    1.143929][    T1] hid: raw HID events driver (C) Jiri Kosina
+[    1.147438][    T1] usbcore: registered new interface driver usbhid
+[    1.147474][    T1] usbhid: USB HID core driver
+[    1.175422][    T1] hw perfevents: enabled with armv8_pmuv3_0 PMU driver, 7 (0,8000003f) counters available
+[    1.179464][    T1] Initializing XFRM netlink socket
+[    1.180476][    T1] NET: Registered PF_INET6 protocol family
+[    1.183301][   T73] watchdog: NMI not fully supported
+[    1.183329][   T73] watchdog: Hard watchdog permanently disabled
+[    1.193468][    T1] Segment Routing with IPv6
+[    1.193946][    T1] In-situ OAM (IOAM) with IPv6
+[    1.195052][    T1] NET: Registered PF_PACKET protocol family
+[    1.199556][   T11] mpam:mpam_resctrl_configure_partids: PARTIDs: monitor=256 closid=32 extra=1
+[    1.267789][   T11] MPAM enabled with 256 PARTIDs and 4 PMGs
+[    1.270453][    T1] registered taskstats version 1
+[    1.366987][    T1] Loading compiled-in X.509 certificates
+[    1.387109][    T1] Loaded X.509 cert 'Build time autogenerated kernel key: 44ab5734a34f74d6800bee06d14bbcb69c77286b'
+[    1.427796][    T1] Demotion targets for Node 0: null
+[    1.429828][    T1] Key type encrypted registered
+[    1.431505][    T1] integrity: secureboot mode disabled
+[    1.431950][    T1] ima: No TPM chip found, activating TPM-bypass!
+[    1.432065][    T1] Loading compiled-in module X.509 certificates
+[    1.434035][    T1] Loaded X.509 cert 'Build time autogenerated kernel key: 44ab5734a34f74d6800bee06d14bbcb69c77286b'
+[    1.434135][    T1] ima: Allocated hash algorithm: sha256
+[    1.437503][    T1] ima: No architecture policies found
+[    1.438617][    T1] evm: Initialising EVM extended attributes:
+[    1.438647][    T1] evm: security.selinux
+[    1.438694][    T1] evm: security.SMACK64 (disabled)
+[    1.438712][    T1] evm: security.SMACK64EXEC (disabled)
+[    1.438725][    T1] evm: security.SMACK64TRANSMUTE (disabled)
+[    1.438736][    T1] evm: security.SMACK64MMAP (disabled)
+[    1.438748][    T1] evm: security.apparmor
+[    1.438759][    T1] evm: security.ima
+[    1.438770][    T1] evm: security.capability
+[    1.438794][    T1] evm: HMAC attrs: 0x1
+[    1.447240][    T1] clk: Disabling unused clocks
+[    1.447598][    T1] PM: genpd: Disabling unused power domains
+[    1.968386][   T12] Freeing initrd memory: 18428K
+[    1.974495][    T1] integrity: Unable to open file: /etc/keys/x509_ima.der (-2)
+[    1.974589][    T1] integrity: Unable to open file: /etc/keys/x509_evm.der (-2)
+[    2.480384][    T1] Freeing unused kernel memory: 6720K
+[    2.483263][    T1] Run /init as init process
+=== MARKER:USERSPACE-UP ===
+kernel: 7.3.0-rc6mpam_expert_test+
+=== mount resctrl ===
+MOUNT-OK l2,debug
+=== resource probe ===
+info dirs: L2 L2_MON L3 L3_MON MB last_cmd_status 
+L3_MON: llc_occupancy mbm_total_bytes 
+L2_MON: l2c_occupancy mbm_core_bytes 
+MB_MON: 
+schemata:
+   MBOPT:33751040=65535
+   MBHDL:33751040=1
+   MBPRI:33751040=3
+   L2PRI:33685504=0;33685508=0
+   L3PRI:33751040=0
+   MBMIN:33751040=0
+   L2MIN:33685504=0;33685508=0
+   L3MIN:33751040=0
+   L2MAX:33685504=100;33685508=100
+   L3MAX:33751040=100
+      MB:33751040=100
+      L2:33685504=ffffffff;33685508=ffffffff
+      L3:33751040=ffffffff
+mon_data (root):
+  mon_L2_33685504
+  mon_L2_33685508
+  mon_L3_33685504
+
+############################
+# MPAM TEST SUITE (22 items)
+############################
+
+Executing [1/22]: python3 mpam_main.py L3 cmt
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cmt_test L3 begin:
+create /sys/fs/resctrl/p1
+put pid: 123 into p1 group
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 128
+read p1 L3/33685504 llc_occupancy: 262144
+read p1 L3/33685504 llc_occupancy: 262144
+read p1 L3/33685504 llc_occupancy: 262144
+read p1 L3/33685504 llc_occupancy: 262144
+read p1 L3/33685504 llc_occupancy: 262144
+L0 size: 64K
+L2 size: 1024K
+L3 size: 2048K
+Pass: Check run_cmt_test L3
+PASS [1/22]: python3 mpam_main.py L3 cmt
+
+Executing [2/22]: python3 mpam_main.py L3 cat
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cat_test L3 begin:
+L3 mask: ffffffff
+L3 size: 2048K
+/sys/fs/resctrl//schemata L3:33751040=1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=ffffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 143
+read p1 L3/33685504 llc_occupancy: 262144
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7fffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 155
+read p1 L3/33685504 llc_occupancy: 253952
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3fffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 167
+read p1 L3/33685504 llc_occupancy: 245760
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1fffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 179
+read p1 L3/33685504 llc_occupancy: 237568
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=fffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 191
+read p1 L3/33685504 llc_occupancy: 229376
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7ffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 203
+read p1 L3/33685504 llc_occupancy: 221184
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3ffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 215
+read p1 L3/33685504 llc_occupancy: 212992
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1ffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 227
+read p1 L3/33685504 llc_occupancy: 204800
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=ffffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 239
+read p1 L3/33685504 llc_occupancy: 196608
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7fffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 251
+read p1 L3/33685504 llc_occupancy: 188416
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3fffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 263
+read p1 L3/33685504 llc_occupancy: 180224
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1fffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 275
+read p1 L3/33685504 llc_occupancy: 172032
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=fffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 287
+read p1 L3/33685504 llc_occupancy: 163840
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7ffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 299
+read p1 L3/33685504 llc_occupancy: 155648
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3ffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 311
+read p1 L3/33685504 llc_occupancy: 147456
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1ffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 323
+read p1 L3/33685504 llc_occupancy: 139264
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=ffff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 335
+read p1 L3/33685504 llc_occupancy: 131072
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7fff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 347
+read p1 L3/33685504 llc_occupancy: 122880
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3fff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 359
+read p1 L3/33685504 llc_occupancy: 114688
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1fff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 371
+read p1 L3/33685504 llc_occupancy: 106496
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=fff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 383
+read p1 L3/33685504 llc_occupancy: 98304
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7ff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 395
+read p1 L3/33685504 llc_occupancy: 90112
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3ff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 407
+read p1 L3/33685504 llc_occupancy: 81920
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1ff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 419
+read p1 L3/33685504 llc_occupancy: 73728
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=ff
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 431
+read p1 L3/33685504 llc_occupancy: 65536
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7f
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 443
+read p1 L3/33685504 llc_occupancy: 57344
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3f
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 455
+read p1 L3/33685504 llc_occupancy: 49152
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1f
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 467
+read p1 L3/33685504 llc_occupancy: 40960
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=f
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 479
+read p1 L3/33685504 llc_occupancy: 32768
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=7
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 491
+read p1 L3/33685504 llc_occupancy: 24576
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=3
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 503
+read p1 L3/33685504 llc_occupancy: 16384
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 136 into p1 group
+/sys/fs/resctrl/p1/schemata L3:33751040=1
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 515
+read p1 L3/33685504 llc_occupancy: 8192
+remove /sys/fs/resctrl/p1
+Pass: run_cat_test L3
+PASS [2/22]: python3 mpam_main.py L3 cat
+
+Executing [3/22]: python3 mpam_main.py L3 cmt cdp
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cmt_test L3 begin:
+create /sys/fs/resctrl/p1
+[  682.283894][  T526] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+put pid: 524 into p1 group
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 529
+read p1 L3/33685504 llc_occupancy: 524288
+read p1 L3/33685504 llc_occupancy: 524288
+read p1 L3/33685504 llc_occupancy: 524288
+read p1 L3/33685504 llc_occupancy: 524288
+read p1 L3/33685504 llc_occupancy: 524288
+L0 size: 64K
+L2 size: 1024K
+L3 size: 2048K
+Pass: Check run_cmt_test L3
+PASS [3/22]: python3 mpam_main.py L3 cmt cdp
+
+Executing [4/22]: python3 mpam_main.py L3 cat cdp
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cat_test L3CODE begin:
+L3CODE mask: ffffffff
+L3CODE size: 2048K
+/sys/fs/resctrl//schemata L3CODE:33751040=1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+[  708.174071][  T539] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=ffffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 544
+read p1 L3/33685504 llc_occupancy: 524288
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7fffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 556
+read p1 L3/33685504 llc_occupancy: 516096
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3fffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 568
+read p1 L3/33685504 llc_occupancy: 507904
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1fffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 580
+read p1 L3/33685504 llc_occupancy: 499712
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=fffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 592
+read p1 L3/33685504 llc_occupancy: 491520
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7ffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 604
+read p1 L3/33685504 llc_occupancy: 483328
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3ffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 616
+read p1 L3/33685504 llc_occupancy: 475136
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1ffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 628
+read p1 L3/33685504 llc_occupancy: 466944
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=ffffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 640
+read p1 L3/33685504 llc_occupancy: 458752
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7fffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 652
+read p1 L3/33685504 llc_occupancy: 450560
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3fffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 664
+read p1 L3/33685504 llc_occupancy: 442368
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1fffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 676
+read p1 L3/33685504 llc_occupancy: 434176
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=fffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 688
+read p1 L3/33685504 llc_occupancy: 425984
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7ffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 700
+read p1 L3/33685504 llc_occupancy: 417792
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3ffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 712
+read p1 L3/33685504 llc_occupancy: 409600
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1ffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 724
+read p1 L3/33685504 llc_occupancy: 401408
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=ffff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 736
+read p1 L3/33685504 llc_occupancy: 393216
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7fff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 748
+read p1 L3/33685504 llc_occupancy: 385024
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3fff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 760
+read p1 L3/33685504 llc_occupancy: 376832
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1fff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 772
+read p1 L3/33685504 llc_occupancy: 368640
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=fff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 784
+read p1 L3/33685504 llc_occupancy: 360448
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7ff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 796
+read p1 L3/33685504 llc_occupancy: 352256
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3ff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 808
+read p1 L3/33685504 llc_occupancy: 344064
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1ff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 820
+read p1 L3/33685504 llc_occupancy: 335872
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=ff
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 832
+read p1 L3/33685504 llc_occupancy: 327680
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7f
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 844
+read p1 L3/33685504 llc_occupancy: 319488
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3f
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 856
+read p1 L3/33685504 llc_occupancy: 311296
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1f
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 868
+read p1 L3/33685504 llc_occupancy: 303104
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=f
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 880
+read p1 L3/33685504 llc_occupancy: 294912
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=7
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 892
+read p1 L3/33685504 llc_occupancy: 286720
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=3
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 904
+read p1 L3/33685504 llc_occupancy: 278528
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3CODE:33751040=1
+L3CODE size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 916
+read p1 L3/33685504 llc_occupancy: 270336
+remove /sys/fs/resctrl/p1
+Pass: run_cat_test L3CODE
+run_cat_test L3DATA begin:
+L3DATA mask: ffffffff
+L3DATA size: 2048K
+/sys/fs/resctrl//schemata L3DATA:33751040=1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=ffffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 929
+read p1 L3/33685504 llc_occupancy: 524288
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7fffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 941
+read p1 L3/33685504 llc_occupancy: 516096
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3fffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 953
+read p1 L3/33685504 llc_occupancy: 507904
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1fffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 965
+read p1 L3/33685504 llc_occupancy: 499712
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=fffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 977
+read p1 L3/33685504 llc_occupancy: 491520
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7ffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 989
+read p1 L3/33685504 llc_occupancy: 483328
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3ffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1001
+read p1 L3/33685504 llc_occupancy: 475136
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1ffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1013
+read p1 L3/33685504 llc_occupancy: 466944
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=ffffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1025
+read p1 L3/33685504 llc_occupancy: 458752
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7fffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1037
+read p1 L3/33685504 llc_occupancy: 450560
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3fffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1049
+read p1 L3/33685504 llc_occupancy: 442368
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1fffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1061
+read p1 L3/33685504 llc_occupancy: 434176
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=fffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1073
+read p1 L3/33685504 llc_occupancy: 425984
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7ffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1085
+read p1 L3/33685504 llc_occupancy: 417792
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3ffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1097
+read p1 L3/33685504 llc_occupancy: 409600
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1ffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1109
+read p1 L3/33685504 llc_occupancy: 401408
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=ffff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1121
+read p1 L3/33685504 llc_occupancy: 393216
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7fff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1133
+read p1 L3/33685504 llc_occupancy: 385024
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3fff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1145
+read p1 L3/33685504 llc_occupancy: 376832
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1fff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1157
+read p1 L3/33685504 llc_occupancy: 368640
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=fff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1169
+read p1 L3/33685504 llc_occupancy: 360448
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7ff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1181
+read p1 L3/33685504 llc_occupancy: 352256
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3ff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1193
+read p1 L3/33685504 llc_occupancy: 344064
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1ff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1205
+read p1 L3/33685504 llc_occupancy: 335872
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=ff
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1217
+read p1 L3/33685504 llc_occupancy: 327680
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7f
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1229
+read p1 L3/33685504 llc_occupancy: 319488
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3f
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1241
+read p1 L3/33685504 llc_occupancy: 311296
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1f
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1253
+read p1 L3/33685504 llc_occupancy: 303104
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=f
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1265
+read p1 L3/33685504 llc_occupancy: 294912
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=7
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1277
+read p1 L3/33685504 llc_occupancy: 286720
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=3
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1289
+read p1 L3/33685504 llc_occupancy: 278528
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 537 into p1 group
+/sys/fs/resctrl/p1/schemata L3DATA:33751040=1
+L3DATA size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1301
+read p1 L3/33685504 llc_occupancy: 270336
+remove /sys/fs/resctrl/p1
+Pass: run_cat_test L3DATA
+PASS [4/22]: python3 mpam_main.py L3 cat cdp
+
+Executing [5/22]: python3 mpam_main.py L3 max
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+
+PASS [5/22]: python3 mpam_main.py L3 max
+
+Executing [6/22]: python3 mpam_main.py L3 min
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+
+PASS [6/22]: python3 mpam_main.py L3 min
+
+Executing [7/22]: python3 mpam_main.py L3 prio
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_prio_test L3 begin:
+/sys/fs/resctrl//schemata L3PRI:33751040=0
+create /sys/fs/resctrl/p1
+/sys/fs/resctrl/p1/schemata L3PRI:33751040=3
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1328
+L3PRI reference test: pid 1328 with 3
+put pid: 1328 into p1 group
+read p1 L3/33685504 llc_occupancy: 262144
+rmdir /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p2
+/sys/fs/resctrl/p1/schemata L3PRI:33751040=0
+/sys/fs/resctrl/p2/schemata L3PRI:33751040=3
+put pid: 1322 into p2 group
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1343
+put pid: 1322 into p1 group
+L3 size: 2048K
+numactl -C 0-7
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1346
+L3PRI comparison test: pid1 1346 with 0, pid2 1343 with 3
+read p1 L3/33685504 llc_occupancy: 262144
+read p2 L3/33685504 llc_occupancy: 262144
+Pass: Check run_feat_test L3PRI
+PASS [7/22]: python3 mpam_main.py L3 prio
+
+Executing [8/22]: python3 mpam_main.py MB mbm
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_mbm_test MB begin:
+create /sys/fs/resctrl/p1
+put pid: 1360 into p1 group
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1365
+read p1 L3/33685504 mbm_total_bytes: 11764790000
+read p1 L3/33685504 mbm_total_bytes: 11909270000
+read p1 L3/33685504 mbm_total_bytes: 12009730000
+read p1 L3/33685504 mbm_total_bytes: 12072250000
+read p1 L3/33685504 mbm_total_bytes: 12119750000
+pid 1365 pool 192.000000 MB bandwidth: 6200.907000 MB/s
+Pass: Check run_mbm_test MB
+PASS [8/22]: python3 mpam_main.py MB mbm
+
+Executing [9/22]: python3 mpam_main.py MB mba
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_mba_test MB begin:
+create /sys/fs/resctrl/p1
+put pid: 1366 into p1 group
+/sys/fs/resctrl/p1/schemata MBHDL:33751040=1
+/sys/fs/resctrl/p1/schemata MB:33751040=10
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1373
+read p1 L3/33685504 mbm_total_bytes: 27707680000
+pid 1373 pool 192.000000 MB bandwidth: 6165.205000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=20
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1375
+read p1 L3/33685504 mbm_total_bytes: 57943390000
+pid 1375 pool 192.000000 MB bandwidth: 6242.465000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=30
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1377
+read p1 L3/33685504 mbm_total_bytes: 88175320000
+pid 1377 pool 192.000000 MB bandwidth: 6168.534000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=40
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1379
+read p1 L3/33685504 mbm_total_bytes: 118414000000
+pid 1379 pool 192.000000 MB bandwidth: 6351.822000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=50
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1381
+read p1 L3/33685504 mbm_total_bytes: 148694930000
+pid 1381 pool 192.000000 MB bandwidth: 6326.738000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=60
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1383
+read p1 L3/33685504 mbm_total_bytes: 179259550000
+pid 1383 pool 192.000000 MB bandwidth: 6249.140000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=70
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1385
+read p1 L3/33685504 mbm_total_bytes: 209976470000
+pid 1385 pool 192.000000 MB bandwidth: 6189.920000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=80
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1387
+read p1 L3/33685504 mbm_total_bytes: 240218880000
+pid 1387 pool 192.000000 MB bandwidth: 6187.259000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=90
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1389
+read p1 L3/33685504 mbm_total_bytes: 270465340000
+pid 1389 pool 192.000000 MB bandwidth: 6279.339000 MB/s
+/sys/fs/resctrl/p1/schemata MB:33751040=100
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1391
+read p1 L3/33685504 mbm_total_bytes: 300726370000
+pid 1391 pool 192.000000 MB bandwidth: 6193.526000 MB/s
+Pass: run_mba_test MB
+PASS [9/22]: python3 mpam_main.py MB mba
+
+Executing [10/22]: python3 mpam_main.py MB min
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_min_test MB begin:
+/sys/fs/resctrl//schemata MBMIN:33751040=0
+create /sys/fs/resctrl/p1
+/sys/fs/resctrl/p1/schemata MBMIN:33751040=100
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1398
+MBMIN reference test: pid 1398 with 100
+put pid: 1398 into p1 group
+pid 1398 pool 192.000000 MB bandwidth: 6252.718000 MB/s
+rmdir /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p2
+/sys/fs/resctrl/p1/schemata MBMIN:33751040=0
+/sys/fs/resctrl/p2/schemata MBMIN:33751040=100
+put pid: 1392 into p2 group
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1406
+put pid: 1392 into p1 group
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1408
+MBMIN comparison test: pid1 1408 with 0, pid2 1406 with 100
+pid 1408 pool 192.000000 MB bandwidth: 6165.002000 MB/s
+pid 1406 pool 192.000000 MB bandwidth: 6240.938000 MB/s
+Skip: no memory contention (2 groups: 12405.94 MB/s vs 1 group: 6252.72 MB/s, linear scaling), MBMIN has nothing to arbitrate
+PASS [10/22]: python3 mpam_main.py MB min
+
+Executing [11/22]: python3 mpam_main.py MB prio
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_prio_test MB begin:
+/sys/fs/resctrl//schemata MBPRI:33751040=0
+create /sys/fs/resctrl/p1
+/sys/fs/resctrl/p1/schemata MBPRI:33751040=7
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1415
+MBPRI reference test: pid 1415 with 7
+put pid: 1415 into p1 group
+pid 1415 pool 192.000000 MB bandwidth: 6230.741000 MB/s
+rmdir /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p2
+/sys/fs/resctrl/p1/schemata MBPRI:33751040=0
+/sys/fs/resctrl/p2/schemata MBPRI:33751040=7
+put pid: 1409 into p2 group
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1423
+put pid: 1409 into p1 group
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1425
+MBPRI comparison test: pid1 1425 with 0, pid2 1423 with 7
+pid 1425 pool 192.000000 MB bandwidth: 6210.183000 MB/s
+pid 1423 pool 192.000000 MB bandwidth: 6192.518000 MB/s
+Skip: no memory contention (2 groups: 12402.70 MB/s vs 1 group: 6230.74 MB/s, linear scaling), MBPRI has nothing to arbitrate
+PASS [11/22]: python3 mpam_main.py MB prio
+
+Executing [12/22]: python3 mpam_main.py MB hdl
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_hdl_test MB begin:
+create /sys/fs/resctrl/p1
+put pid: 1426 into p1 group
+/sys/fs/resctrl/p1/schemata MBHDL:33751040=0
+/sys/fs/resctrl/p1/schemata MB:33751040=10
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1433
+pid 1433 pool 192.000000 MB bandwidth: 6233.470000 MB/s
+/sys/fs/resctrl/p1/schemata MBHDL:33751040=1
+/sys/fs/resctrl/p1/schemata MB:33751040=10
+numactl -N 0 bw_mem -P 8 -N 3 64M rd
+create benchmark pid: 1436
+pid 1436 pool 192.000000 MB bandwidth: 6297.633000 MB/s
+Fail: run_hdl_test MB
+FAIL [12/22]: python3 mpam_main.py MB hdl
+
+Executing [13/22]: python3 mpam_main.py L2 mbm
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_mbm_test L2 begin:
+create /sys/fs/resctrl/p1
+put pid: 1437 into p1 group
+taskset -c 0 bw_mem -P 1 -N 10 256M rd
+create benchmark pid: 1442
+read p1 L2/33685504 mbm_core_bytes: 80000
+read p1 L2/33685504 mbm_core_bytes: 191920000
+read p1 L2/33685504 mbm_core_bytes: 298410000
+read p1 L2/33685504 mbm_core_bytes: 379890000
+read p1 L2/33685504 mbm_core_bytes: 436090000
+pid 1442 pool 2560.000000 MB bandwidth: 6156.337000 MB/s
+Pass: Check run_mbm_test L2
+PASS [13/22]: python3 mpam_main.py L2 mbm
+
+Executing [14/22]: python3 mpam_main.py L2 cmt
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cmt_test L2 begin:
+create /sys/fs/resctrl/p1
+put pid: 1443 into p1 group
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1448
+read p1 L2/33685504 l2c_occupancy: 131072
+read p1 L2/33685504 l2c_occupancy: 131072
+read p1 L2/33685504 l2c_occupancy: 131072
+read p1 L2/33685504 l2c_occupancy: 131072
+read p1 L2/33685504 l2c_occupancy: 131072
+L0 size: 64K
+L2 size: 1024K
+L3 size: 2048K
+Pass: Check run_cmt_test L2
+PASS [14/22]: python3 mpam_main.py L2 cmt
+
+Executing [15/22]: python3 mpam_main.py L2 cat
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cat_test L2 begin:
+L2 mask: ffffffff
+L2 size: 1024K
+/sys/fs/resctrl//schemata L2:33685504=1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=ffffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1457
+read p1 L2/33685504 l2c_occupancy: 131072
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7fffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1463
+read p1 L2/33685504 l2c_occupancy: 126976
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3fffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1469
+read p1 L2/33685504 l2c_occupancy: 122880
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1fffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1475
+read p1 L2/33685504 l2c_occupancy: 118784
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=fffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1481
+read p1 L2/33685504 l2c_occupancy: 114688
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7ffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1487
+read p1 L2/33685504 l2c_occupancy: 110592
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3ffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1493
+read p1 L2/33685504 l2c_occupancy: 106496
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1ffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1499
+read p1 L2/33685504 l2c_occupancy: 102400
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=ffffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1505
+read p1 L2/33685504 l2c_occupancy: 98304
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7fffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1511
+read p1 L2/33685504 l2c_occupancy: 94208
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3fffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1517
+read p1 L2/33685504 l2c_occupancy: 90112
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1fffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1523
+read p1 L2/33685504 l2c_occupancy: 86016
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=fffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1529
+read p1 L2/33685504 l2c_occupancy: 81920
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7ffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1535
+read p1 L2/33685504 l2c_occupancy: 77824
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3ffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1541
+read p1 L2/33685504 l2c_occupancy: 73728
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1ffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1547
+read p1 L2/33685504 l2c_occupancy: 69632
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=ffff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1553
+read p1 L2/33685504 l2c_occupancy: 65536
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7fff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1559
+read p1 L2/33685504 l2c_occupancy: 61440
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3fff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1565
+read p1 L2/33685504 l2c_occupancy: 57344
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1fff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1571
+read p1 L2/33685504 l2c_occupancy: 53248
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=fff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1577
+read p1 L2/33685504 l2c_occupancy: 49152
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7ff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1583
+read p1 L2/33685504 l2c_occupancy: 45056
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3ff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1589
+read p1 L2/33685504 l2c_occupancy: 40960
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1ff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1595
+read p1 L2/33685504 l2c_occupancy: 36864
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=ff
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1601
+read p1 L2/33685504 l2c_occupancy: 32768
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7f
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1607
+read p1 L2/33685504 l2c_occupancy: 28672
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3f
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1613
+read p1 L2/33685504 l2c_occupancy: 24576
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1f
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1619
+read p1 L2/33685504 l2c_occupancy: 20480
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=f
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1625
+read p1 L2/33685504 l2c_occupancy: 16384
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=7
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1631
+read p1 L2/33685504 l2c_occupancy: 12288
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=3
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1637
+read p1 L2/33685504 l2c_occupancy: 8192
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1450 into p1 group
+/sys/fs/resctrl/p1/schemata L2:33685504=1
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1643
+read p1 L2/33685504 l2c_occupancy: 4096
+remove /sys/fs/resctrl/p1
+Pass: run_cat_test L2
+PASS [15/22]: python3 mpam_main.py L2 cat
+
+Executing [16/22]: python3 mpam_main.py L2 mbm cdp
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_mbm_test L2 begin:
+create /sys/fs/resctrl/p1
+[ 2758.254861][ T1648] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+[ 2758.255247][ T1648] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+put pid: 1646 into p1 group
+taskset -c 0 bw_mem -P 1 -N 10 256M rd
+create benchmark pid: 1651
+read p1 L2/33685504 mbm_core_bytes: 130000
+read p1 L2/33685504 mbm_core_bytes: 252320000
+read p1 L2/33685504 mbm_core_bytes: 426520000
+read p1 L2/33685504 mbm_core_bytes: 540360000
+read p1 L2/33685504 mbm_core_bytes: 632760000
+pid 1651 pool 2560.000000 MB bandwidth: 6151.407000 MB/s
+Pass: Check run_mbm_test L2
+PASS [16/22]: python3 mpam_main.py L2 mbm cdp
+
+Executing [17/22]: python3 mpam_main.py L2 cmt cdp
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cmt_test L2 begin:
+create /sys/fs/resctrl/p1
+[ 2760.885071][ T1654] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+[ 2760.885533][ T1654] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+put pid: 1652 into p1 group
+L2 size: 1024K
+taskset -c 0 stress-ng --cache 1 --aggressive -t 20s
+create benchmark pid: 1657
+read p1 L2/33685504 l2c_occupancy: 262144
+read p1 L2/33685504 l2c_occupancy: 262144
+read p1 L2/33685504 l2c_occupancy: 262144
+read p1 L2/33685504 l2c_occupancy: 262144
+read p1 L2/33685504 l2c_occupancy: 262144
+L0 size: 64K
+L2 size: 1024K
+L3 size: 2048K
+Pass: Check run_cmt_test L2
+PASS [17/22]: python3 mpam_main.py L2 cmt cdp
+
+Executing [18/22]: python3 mpam_main.py L2 cat cdp
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_cat_test L2CODE begin:
+L2CODE mask: ffffffff
+L2CODE size: 1024K
+/sys/fs/resctrl//schemata L2CODE:33685504=1
+create /sys/fs/resctrl/p1
+[ 2786.713566][ T1661] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+[ 2786.713983][ T1661] mpam:resctrl_arch_set_cdp_enabled: CDP is an expert feature and may cause MPAM to malfunction.
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=ffffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1666
+read p1 L2/33685504 l2c_occupancy: 262144
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7fffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1678
+read p1 L2/33685504 l2c_occupancy: 258048
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3fffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1690
+read p1 L2/33685504 l2c_occupancy: 253952
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1fffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1702
+read p1 L2/33685504 l2c_occupancy: 249856
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=fffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1714
+read p1 L2/33685504 l2c_occupancy: 245760
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7ffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1726
+read p1 L2/33685504 l2c_occupancy: 241664
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3ffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1738
+read p1 L2/33685504 l2c_occupancy: 237568
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1ffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1750
+read p1 L2/33685504 l2c_occupancy: 233472
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=ffffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1762
+read p1 L2/33685504 l2c_occupancy: 229376
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7fffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1774
+read p1 L2/33685504 l2c_occupancy: 225280
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3fffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1786
+read p1 L2/33685504 l2c_occupancy: 221184
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1fffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1798
+read p1 L2/33685504 l2c_occupancy: 217088
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=fffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1810
+read p1 L2/33685504 l2c_occupancy: 212992
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7ffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1822
+read p1 L2/33685504 l2c_occupancy: 208896
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3ffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1834
+read p1 L2/33685504 l2c_occupancy: 204800
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1ffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1846
+read p1 L2/33685504 l2c_occupancy: 200704
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=ffff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1858
+read p1 L2/33685504 l2c_occupancy: 196608
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7fff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1870
+read p1 L2/33685504 l2c_occupancy: 192512
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3fff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1882
+read p1 L2/33685504 l2c_occupancy: 188416
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1fff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1894
+read p1 L2/33685504 l2c_occupancy: 184320
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=fff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1906
+read p1 L2/33685504 l2c_occupancy: 180224
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7ff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1918
+read p1 L2/33685504 l2c_occupancy: 176128
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3ff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1930
+read p1 L2/33685504 l2c_occupancy: 172032
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1ff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1942
+read p1 L2/33685504 l2c_occupancy: 167936
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=ff
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1954
+read p1 L2/33685504 l2c_occupancy: 163840
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7f
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1966
+read p1 L2/33685504 l2c_occupancy: 159744
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3f
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1978
+read p1 L2/33685504 l2c_occupancy: 155648
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1f
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 1990
+read p1 L2/33685504 l2c_occupancy: 151552
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=f
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2002
+read p1 L2/33685504 l2c_occupancy: 147456
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=7
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2014
+read p1 L2/33685504 l2c_occupancy: 143360
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=3
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2026
+read p1 L2/33685504 l2c_occupancy: 139264
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2CODE:33685504=1
+L2CODE size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2038
+read p1 L2/33685504 l2c_occupancy: 135168
+remove /sys/fs/resctrl/p1
+Pass: run_cat_test L2CODE
+run_cat_test L2DATA begin:
+L2DATA mask: ffffffff
+L2DATA size: 1024K
+/sys/fs/resctrl//schemata L2DATA:33685504=1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=ffffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2051
+read p1 L2/33685504 l2c_occupancy: 262144
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7fffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2063
+read p1 L2/33685504 l2c_occupancy: 258048
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3fffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2075
+read p1 L2/33685504 l2c_occupancy: 253952
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1fffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2087
+read p1 L2/33685504 l2c_occupancy: 249856
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=fffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2099
+read p1 L2/33685504 l2c_occupancy: 245760
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7ffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2111
+read p1 L2/33685504 l2c_occupancy: 241664
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3ffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2123
+read p1 L2/33685504 l2c_occupancy: 237568
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1ffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2135
+read p1 L2/33685504 l2c_occupancy: 233472
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=ffffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2147
+read p1 L2/33685504 l2c_occupancy: 229376
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7fffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2159
+read p1 L2/33685504 l2c_occupancy: 225280
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3fffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2171
+read p1 L2/33685504 l2c_occupancy: 221184
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1fffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2183
+read p1 L2/33685504 l2c_occupancy: 217088
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=fffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2195
+read p1 L2/33685504 l2c_occupancy: 212992
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7ffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2207
+read p1 L2/33685504 l2c_occupancy: 208896
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3ffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2219
+read p1 L2/33685504 l2c_occupancy: 204800
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1ffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2231
+read p1 L2/33685504 l2c_occupancy: 200704
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=ffff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2243
+read p1 L2/33685504 l2c_occupancy: 196608
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7fff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2255
+read p1 L2/33685504 l2c_occupancy: 192512
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3fff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2267
+read p1 L2/33685504 l2c_occupancy: 188416
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1fff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2279
+read p1 L2/33685504 l2c_occupancy: 184320
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=fff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2291
+read p1 L2/33685504 l2c_occupancy: 180224
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7ff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2303
+read p1 L2/33685504 l2c_occupancy: 176128
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3ff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2315
+read p1 L2/33685504 l2c_occupancy: 172032
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1ff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2327
+read p1 L2/33685504 l2c_occupancy: 167936
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=ff
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2339
+read p1 L2/33685504 l2c_occupancy: 163840
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7f
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2351
+read p1 L2/33685504 l2c_occupancy: 159744
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3f
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2363
+read p1 L2/33685504 l2c_occupancy: 155648
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1f
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2375
+read p1 L2/33685504 l2c_occupancy: 151552
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=f
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2387
+read p1 L2/33685504 l2c_occupancy: 147456
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=7
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2399
+read p1 L2/33685504 l2c_occupancy: 143360
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=3
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2411
+read p1 L2/33685504 l2c_occupancy: 139264
+remove /sys/fs/resctrl/p1
+create /sys/fs/resctrl/p1
+put pid: 1659 into p1 group
+/sys/fs/resctrl/p1/schemata L2DATA:33685504=1
+L2DATA size: 1024K
+numactl -C 0-3
+ stress-ng --cache 6 --aggressive -t 20s
+create benchmark pid: 2423
+read p1 L2/33685504 l2c_occupancy: 135168
+remove /sys/fs/resctrl/p1
+Pass: run_cat_test L2DATA
+PASS [18/22]: python3 mpam_main.py L2 cat cdp
+
+Executing [19/22]: python3 mpam_main.py limit
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_limit_test begin:
+sh: write error: Invalid argument
+ctrl_grp root rmid: 0
+create /sys/fs/resctrl//mon_groups/m1
+mon_group root/m1 rmid: 1
+create /sys/fs/resctrl//mon_groups/m2
+mon_group root/m2 rmid: 2
+create /sys/fs/resctrl//mon_groups/m3
+mon_group root/m3 rmid: 3
+create /sys/fs/resctrl/p1
+ctrl_grp p1 rmid: 519
+create /sys/fs/resctrl/p1/mon_groups/m1
+mon_group p1/m1 rmid: 644
+create /sys/fs/resctrl/p1/mon_groups/m2
+mon_group p1/m2 rmid: 645
+create /sys/fs/resctrl/p1/mon_groups/m3
+mon_group p1/m3 rmid: 646
+create /sys/fs/resctrl/p2
+ctrl_grp p2 rmid: 395
+create /sys/fs/resctrl/p2/mon_groups/m1
+mon_group p2/m1 rmid: 520
+create /sys/fs/resctrl/p2/mon_groups/m2
+mon_group p2/m2 rmid: 521
+create /sys/fs/resctrl/p2/mon_groups/m3
+mon_group p2/m3 rmid: 522
+create /sys/fs/resctrl/p3
+ctrl_grp p3 rmid: 399
+create /sys/fs/resctrl/p3/mon_groups/m1
+mon_group p3/m1 rmid: 524
+create /sys/fs/resctrl/p3/mon_groups/m2
+mon_group p3/m2 rmid: 525
+create /sys/fs/resctrl/p3/mon_groups/m3
+mon_group p3/m3 rmid: 526
+create /sys/fs/resctrl/p4
+ctrl_grp p4 rmid: 400
+create /sys/fs/resctrl/p4/mon_groups/m1
+mon_group p4/m1 rmid: 401
+create /sys/fs/resctrl/p4/mon_groups/m2
+mon_group p4/m2 rmid: 402
+create /sys/fs/resctrl/p4/mon_groups/m3
+mon_group p4/m3 rmid: 403
+create /sys/fs/resctrl/p5
+ctrl_grp p5 rmid: 278
+create /sys/fs/resctrl/p5/mon_groups/m1
+mon_group p5/m1 rmid: 279
+create /sys/fs/resctrl/p5/mon_groups/m2
+mon_group p5/m2 rmid: 404
+create /sys/fs/resctrl/p5/mon_groups/m3
+mon_group p5/m3 rmid: 405
+create /sys/fs/resctrl/p6
+ctrl_grp p6 rmid: 282
+create /sys/fs/resctrl/p6/mon_groups/m1
+mon_group p6/m1 rmid: 283
+create /sys/fs/resctrl/p6/mon_groups/m2
+mon_group p6/m2 rmid: 408
+create /sys/fs/resctrl/p6/mon_groups/m3
+mon_group p6/m3 rmid: 409
+create /sys/fs/resctrl/p7
+ctrl_grp p7 rmid: 286
+create /sys/fs/resctrl/p7/mon_groups/m1
+mon_group p7/m1 rmid: 287
+create /sys/fs/resctrl/p7/mon_groups/m2
+mon_group p7/m2 rmid: 412
+create /sys/fs/resctrl/p7/mon_groups/m3
+mon_group p7/m3 rmid: 413
+create /sys/fs/resctrl/p8
+ctrl_grp p8 rmid: 290
+create /sys/fs/resctrl/p8/mon_groups/m1
+mon_group p8/m1 rmid: 291
+create /sys/fs/resctrl/p8/mon_groups/m2
+mon_group p8/m2 rmid: 416
+create /sys/fs/resctrl/p8/mon_groups/m3
+mon_group p8/m3 rmid: 417
+create /sys/fs/resctrl/p9
+ctrl_grp p9 rmid: 294
+create /sys/fs/resctrl/p9/mon_groups/m1
+mon_group p9/m1 rmid: 295
+create /sys/fs/resctrl/p9/mon_groups/m2
+mon_group p9/m2 rmid: 420
+create /sys/fs/resctrl/p9/mon_groups/m3
+mon_group p9/m3 rmid: 421
+create /sys/fs/resctrl/p10
+ctrl_grp p10 rmid: 298
+create /sys/fs/resctrl/p10/mon_groups/m1
+mon_group p10/m1 rmid: 299
+create /sys/fs/resctrl/p10/mon_groups/m2
+mon_group p10/m2 rmid: 424
+create /sys/fs/resctrl/p10/mon_groups/m3
+mon_group p10/m3 rmid: 425
+create /sys/fs/resctrl/p11
+ctrl_grp p11 rmid: 302
+create /sys/fs/resctrl/p11/mon_groups/m1
+mon_group p11/m1 rmid: 303
+create /sys/fs/resctrl/p11/mon_groups/m2
+mon_group p11/m2 rmid: 428
+create /sys/fs/resctrl/p11/mon_groups/m3
+mon_group p11/m3 rmid: 429
+create /sys/fs/resctrl/p12
+ctrl_grp p12 rmid: 306
+create /sys/fs/resctrl/p12/mon_groups/m1
+mon_group p12/m1 rmid: 307
+create /sys/fs/resctrl/p12/mon_groups/m2
+mon_group p12/m2 rmid: 432
+create /sys/fs/resctrl/p12/mon_groups/m3
+mon_group p12/m3 rmid: 433
+create /sys/fs/resctrl/p13
+ctrl_grp p13 rmid: 310
+create /sys/fs/resctrl/p13/mon_groups/m1
+mon_group p13/m1 rmid: 311
+create /sys/fs/resctrl/p13/mon_groups/m2
+mon_group p13/m2 rmid: 436
+create /sys/fs/resctrl/p13/mon_groups/m3
+mon_group p13/m3 rmid: 437
+create /sys/fs/resctrl/p14
+ctrl_grp p14 rmid: 314
+create /sys/fs/resctrl/p14/mon_groups/m1
+mon_group p14/m1 rmid: 315
+create /sys/fs/resctrl/p14/mon_groups/m2
+mon_group p14/m2 rmid: 440
+create /sys/fs/resctrl/p14/mon_groups/m3
+mon_group p14/m3 rmid: 441
+create /sys/fs/resctrl/p15
+ctrl_grp p15 rmid: 318
+create /sys/fs/resctrl/p15/mon_groups/m1
+mon_group p15/m1 rmid: 319
+create /sys/fs/resctrl/p15/mon_groups/m2
+mon_group p15/m2 rmid: 444
+create /sys/fs/resctrl/p15/mon_groups/m3
+mon_group p15/m3 rmid: 445
+create /sys/fs/resctrl/p16
+ctrl_grp p16 rmid: 66
+create /sys/fs/resctrl/p16/mon_groups/m1
+mon_group p16/m1 rmid: 67
+create /sys/fs/resctrl/p16/mon_groups/m2
+mon_group p16/m2 rmid: 192
+create /sys/fs/resctrl/p16/mon_groups/m3
+mon_group p16/m3 rmid: 193
+create /sys/fs/resctrl/p17
+ctrl_grp p17 rmid: 70
+create /sys/fs/resctrl/p17/mon_groups/m1
+mon_group p17/m1 rmid: 71
+create /sys/fs/resctrl/p17/mon_groups/m2
+mon_group p17/m2 rmid: 196
+create /sys/fs/resctrl/p17/mon_groups/m3
+mon_group p17/m3 rmid: 197
+create /sys/fs/resctrl/p18
+ctrl_grp p18 rmid: 74
+create /sys/fs/resctrl/p18/mon_groups/m1
+mon_group p18/m1 rmid: 75
+create /sys/fs/resctrl/p18/mon_groups/m2
+mon_group p18/m2 rmid: 200
+create /sys/fs/resctrl/p18/mon_groups/m3
+mon_group p18/m3 rmid: 201
+create /sys/fs/resctrl/p19
+ctrl_grp p19 rmid: 78
+create /sys/fs/resctrl/p19/mon_groups/m1
+mon_group p19/m1 rmid: 79
+create /sys/fs/resctrl/p19/mon_groups/m2
+mon_group p19/m2 rmid: 204
+create /sys/fs/resctrl/p19/mon_groups/m3
+mon_group p19/m3 rmid: 205
+create /sys/fs/resctrl/p20
+ctrl_grp p20 rmid: 82
+create /sys/fs/resctrl/p20/mon_groups/m1
+mon_group p20/m1 rmid: 83
+create /sys/fs/resctrl/p20/mon_groups/m2
+mon_group p20/m2 rmid: 208
+create /sys/fs/resctrl/p20/mon_groups/m3
+mon_group p20/m3 rmid: 209
+create /sys/fs/resctrl/p21
+ctrl_grp p21 rmid: 86
+create /sys/fs/resctrl/p21/mon_groups/m1
+mon_group p21/m1 rmid: 87
+create /sys/fs/resctrl/p21/mon_groups/m2
+mon_group p21/m2 rmid: 212
+create /sys/fs/resctrl/p21/mon_groups/m3
+mon_group p21/m3 rmid: 213
+create /sys/fs/resctrl/p22
+ctrl_grp p22 rmid: 90
+create /sys/fs/resctrl/p22/mon_groups/m1
+mon_group p22/m1 rmid: 91
+create /sys/fs/resctrl/p22/mon_groups/m2
+mon_group p22/m2 rmid: 216
+create /sys/fs/resctrl/p22/mon_groups/m3
+mon_group p22/m3 rmid: 217
+create /sys/fs/resctrl/p23
+ctrl_grp p23 rmid: 94
+create /sys/fs/resctrl/p23/mon_groups/m1
+mon_group p23/m1 rmid: 95
+create /sys/fs/resctrl/p23/mon_groups/m2
+mon_group p23/m2 rmid: 220
+create /sys/fs/resctrl/p23/mon_groups/m3
+mon_group p23/m3 rmid: 221
+create /sys/fs/resctrl/p24
+ctrl_grp p24 rmid: 98
+create /sys/fs/resctrl/p24/mon_groups/m1
+mon_group p24/m1 rmid: 99
+create /sys/fs/resctrl/p24/mon_groups/m2
+mon_group p24/m2 rmid: 224
+create /sys/fs/resctrl/p24/mon_groups/m3
+mon_group p24/m3 rmid: 225
+create /sys/fs/resctrl/p25
+ctrl_grp p25 rmid: 102
+create /sys/fs/resctrl/p25/mon_groups/m1
+mon_group p25/m1 rmid: 103
+create /sys/fs/resctrl/p25/mon_groups/m2
+mon_group p25/m2 rmid: 228
+create /sys/fs/resctrl/p25/mon_groups/m3
+mon_group p25/m3 rmid: 229
+create /sys/fs/resctrl/p26
+ctrl_grp p26 rmid: 106
+create /sys/fs/resctrl/p26/mon_groups/m1
+mon_group p26/m1 rmid: 107
+create /sys/fs/resctrl/p26/mon_groups/m2
+mon_group p26/m2 rmid: 232
+create /sys/fs/resctrl/p26/mon_groups/m3
+mon_group p26/m3 rmid: 233
+create /sys/fs/resctrl/p27
+ctrl_grp p27 rmid: 110
+create /sys/fs/resctrl/p27/mon_groups/m1
+mon_group p27/m1 rmid: 111
+create /sys/fs/resctrl/p27/mon_groups/m2
+mon_group p27/m2 rmid: 236
+create /sys/fs/resctrl/p27/mon_groups/m3
+mon_group p27/m3 rmid: 237
+create /sys/fs/resctrl/p28
+ctrl_grp p28 rmid: 114
+create /sys/fs/resctrl/p28/mon_groups/m1
+mon_group p28/m1 rmid: 115
+create /sys/fs/resctrl/p28/mon_groups/m2
+mon_group p28/m2 rmid: 240
+create /sys/fs/resctrl/p28/mon_groups/m3
+mon_group p28/m3 rmid: 241
+create /sys/fs/resctrl/p29
+ctrl_grp p29 rmid: 118
+create /sys/fs/resctrl/p29/mon_groups/m1
+mon_group p29/m1 rmid: 119
+create /sys/fs/resctrl/p29/mon_groups/m2
+mon_group p29/m2 rmid: 244
+create /sys/fs/resctrl/p29/mon_groups/m3
+mon_group p29/m3 rmid: 245
+create /sys/fs/resctrl/p30
+ctrl_grp p30 rmid: 122
+create /sys/fs/resctrl/p30/mon_groups/m1
+mon_group p30/m1 rmid: 123
+create /sys/fs/resctrl/p30/mon_groups/m2
+mon_group p30/m2 rmid: 248
+create /sys/fs/resctrl/p30/mon_groups/m3
+mon_group p30/m3 rmid: 249
+create /sys/fs/resctrl/p31
+ctrl_grp p31 rmid: 126
+create /sys/fs/resctrl/p31/mon_groups/m1
+mon_group p31/m1 rmid: 127
+create /sys/fs/resctrl/p31/mon_groups/m2
+mon_group p31/m2 rmid: 252
+create /sys/fs/resctrl/p31/mon_groups/m3
+mon_group p31/m3 rmid: 253
+remove /sys/fs/resctrl/p1/mon_groups/m1
+remove /sys/fs/resctrl/p1/mon_groups/m2
+remove /sys/fs/resctrl/p1/mon_groups/m3
+remove /sys/fs/resctrl/p1
+remove /sys/fs/resctrl/p2/mon_groups/m1
+remove /sys/fs/resctrl/p2/mon_groups/m2
+remove /sys/fs/resctrl/p2/mon_groups/m3
+remove /sys/fs/resctrl/p2
+remove /sys/fs/resctrl/p3/mon_groups/m1
+remove /sys/fs/resctrl/p3/mon_groups/m2
+remove /sys/fs/resctrl/p3/mon_groups/m3
+remove /sys/fs/resctrl/p3
+remove /sys/fs/resctrl/p4/mon_groups/m1
+remove /sys/fs/resctrl/p4/mon_groups/m2
+remove /sys/fs/resctrl/p4/mon_groups/m3
+remove /sys/fs/resctrl/p4
+remove /sys/fs/resctrl/p5/mon_groups/m1
+remove /sys/fs/resctrl/p5/mon_groups/m2
+remove /sys/fs/resctrl/p5/mon_groups/m3
+remove /sys/fs/resctrl/p5
+remove /sys/fs/resctrl/p6/mon_groups/m1
+remove /sys/fs/resctrl/p6/mon_groups/m2
+remove /sys/fs/resctrl/p6/mon_groups/m3
+remove /sys/fs/resctrl/p6
+remove /sys/fs/resctrl/p7/mon_groups/m1
+remove /sys/fs/resctrl/p7/mon_groups/m2
+remove /sys/fs/resctrl/p7/mon_groups/m3
+remove /sys/fs/resctrl/p7
+remove /sys/fs/resctrl/p8/mon_groups/m1
+remove /sys/fs/resctrl/p8/mon_groups/m2
+remove /sys/fs/resctrl/p8/mon_groups/m3
+remove /sys/fs/resctrl/p8
+remove /sys/fs/resctrl/p9/mon_groups/m1
+remove /sys/fs/resctrl/p9/mon_groups/m2
+remove /sys/fs/resctrl/p9/mon_groups/m3
+remove /sys/fs/resctrl/p9
+remove /sys/fs/resctrl/p10/mon_groups/m1
+remove /sys/fs/resctrl/p10/mon_groups/m2
+remove /sys/fs/resctrl/p10/mon_groups/m3
+remove /sys/fs/resctrl/p10
+remove /sys/fs/resctrl/p11/mon_groups/m1
+remove /sys/fs/resctrl/p11/mon_groups/m2
+remove /sys/fs/resctrl/p11/mon_groups/m3
+remove /sys/fs/resctrl/p11
+remove /sys/fs/resctrl/p12/mon_groups/m1
+remove /sys/fs/resctrl/p12/mon_groups/m2
+remove /sys/fs/resctrl/p12/mon_groups/m3
+remove /sys/fs/resctrl/p12
+remove /sys/fs/resctrl/p13/mon_groups/m1
+remove /sys/fs/resctrl/p13/mon_groups/m2
+remove /sys/fs/resctrl/p13/mon_groups/m3
+remove /sys/fs/resctrl/p13
+remove /sys/fs/resctrl/p14/mon_groups/m1
+remove /sys/fs/resctrl/p14/mon_groups/m2
+remove /sys/fs/resctrl/p14/mon_groups/m3
+remove /sys/fs/resctrl/p14
+remove /sys/fs/resctrl/p15/mon_groups/m1
+remove /sys/fs/resctrl/p15/mon_groups/m2
+remove /sys/fs/resctrl/p15/mon_groups/m3
+remove /sys/fs/resctrl/p15
+remove /sys/fs/resctrl/p16/mon_groups/m1
+remove /sys/fs/resctrl/p16/mon_groups/m2
+remove /sys/fs/resctrl/p16/mon_groups/m3
+remove /sys/fs/resctrl/p16
+remove /sys/fs/resctrl/p17/mon_groups/m1
+remove /sys/fs/resctrl/p17/mon_groups/m2
+remove /sys/fs/resctrl/p17/mon_groups/m3
+remove /sys/fs/resctrl/p17
+remove /sys/fs/resctrl/p18/mon_groups/m1
+remove /sys/fs/resctrl/p18/mon_groups/m2
+remove /sys/fs/resctrl/p18/mon_groups/m3
+remove /sys/fs/resctrl/p18
+remove /sys/fs/resctrl/p19/mon_groups/m1
+remove /sys/fs/resctrl/p19/mon_groups/m2
+remove /sys/fs/resctrl/p19/mon_groups/m3
+remove /sys/fs/resctrl/p19
+remove /sys/fs/resctrl/p20/mon_groups/m1
+remove /sys/fs/resctrl/p20/mon_groups/m2
+remove /sys/fs/resctrl/p20/mon_groups/m3
+remove /sys/fs/resctrl/p20
+remove /sys/fs/resctrl/p21/mon_groups/m1
+remove /sys/fs/resctrl/p21/mon_groups/m2
+remove /sys/fs/resctrl/p21/mon_groups/m3
+remove /sys/fs/resctrl/p21
+remove /sys/fs/resctrl/p22/mon_groups/m1
+remove /sys/fs/resctrl/p22/mon_groups/m2
+remove /sys/fs/resctrl/p22/mon_groups/m3
+remove /sys/fs/resctrl/p22
+remove /sys/fs/resctrl/p23/mon_groups/m1
+remove /sys/fs/resctrl/p23/mon_groups/m2
+remove /sys/fs/resctrl/p23/mon_groups/m3
+remove /sys/fs/resctrl/p23
+remove /sys/fs/resctrl/p24/mon_groups/m1
+remove /sys/fs/resctrl/p24/mon_groups/m2
+remove /sys/fs/resctrl/p24/mon_groups/m3
+remove /sys/fs/resctrl/p24
+remove /sys/fs/resctrl/p25/mon_groups/m1
+remove /sys/fs/resctrl/p25/mon_groups/m2
+remove /sys/fs/resctrl/p25/mon_groups/m3
+remove /sys/fs/resctrl/p25
+remove /sys/fs/resctrl/p26/mon_groups/m1
+remove /sys/fs/resctrl/p26/mon_groups/m2
+remove /sys/fs/resctrl/p26/mon_groups/m3
+remove /sys/fs/resctrl/p26
+remove /sys/fs/resctrl/p27/mon_groups/m1
+remove /sys/fs/resctrl/p27/mon_groups/m2
+remove /sys/fs/resctrl/p27/mon_groups/m3
+remove /sys/fs/resctrl/p27
+remove /sys/fs/resctrl/p28/mon_groups/m1
+remove /sys/fs/resctrl/p28/mon_groups/m2
+remove /sys/fs/resctrl/p28/mon_groups/m3
+remove /sys/fs/resctrl/p28
+remove /sys/fs/resctrl/p29/mon_groups/m1
+remove /sys/fs/resctrl/p29/mon_groups/m2
+remove /sys/fs/resctrl/p29/mon_groups/m3
+remove /sys/fs/resctrl/p29
+remove /sys/fs/resctrl/p30/mon_groups/m1
+remove /sys/fs/resctrl/p30/mon_groups/m2
+remove /sys/fs/resctrl/p30/mon_groups/m3
+remove /sys/fs/resctrl/p30
+remove /sys/fs/resctrl/p31/mon_groups/m1
+remove /sys/fs/resctrl/p31/mon_groups/m2
+remove /sys/fs/resctrl/p31/mon_groups/m3
+remove /sys/fs/resctrl/p31
+Pass: Check run_limit_test
+PASS [19/22]: python3 mpam_main.py limit
+
+Executing [20/22]: python3 mpam_main.py MB precision
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+run_precision_test MB begin:
+create /sys/fs/resctrl/p1
+echo MB:33751040=1
+echo MB:33751040=2
+echo MB:33751040=3
+echo MB:33751040=4
+echo MB:33751040=5
+echo MB:33751040=6
+echo MB:33751040=7
+echo MB:33751040=8
+echo MB:33751040=9
+echo MB:33751040=10
+echo MB:33751040=11
+echo MB:33751040=12
+echo MB:33751040=13
+echo MB:33751040=14
+echo MB:33751040=15
+echo MB:33751040=16
+echo MB:33751040=17
+echo MB:33751040=18
+echo MB:33751040=19
+echo MB:33751040=20
+echo MB:33751040=21
+echo MB:33751040=22
+echo MB:33751040=23
+echo MB:33751040=24
+echo MB:33751040=25
+echo MB:33751040=26
+echo MB:33751040=27
+echo MB:33751040=28
+echo MB:33751040=29
+echo MB:33751040=30
+echo MB:33751040=31
+echo MB:33751040=32
+echo MB:33751040=33
+echo MB:33751040=34
+echo MB:33751040=35
+echo MB:33751040=36
+echo MB:33751040=37
+echo MB:33751040=38
+echo MB:33751040=39
+echo MB:33751040=40
+echo MB:33751040=41
+echo MB:33751040=42
+echo MB:33751040=43
+echo MB:33751040=44
+echo MB:33751040=45
+echo MB:33751040=46
+echo MB:33751040=47
+echo MB:33751040=48
+echo MB:33751040=49
+echo MB:33751040=50
+echo MB:33751040=51
+echo MB:33751040=52
+echo MB:33751040=53
+echo MB:33751040=54
+echo MB:33751040=55
+echo MB:33751040=56
+echo MB:33751040=57
+echo MB:33751040=58
+echo MB:33751040=59
+echo MB:33751040=60
+echo MB:33751040=61
+echo MB:33751040=62
+echo MB:33751040=63
+echo MB:33751040=64
+echo MB:33751040=65
+echo MB:33751040=66
+echo MB:33751040=67
+echo MB:33751040=68
+echo MB:33751040=69
+echo MB:33751040=70
+echo MB:33751040=71
+echo MB:33751040=72
+echo MB:33751040=73
+echo MB:33751040=74
+echo MB:33751040=75
+echo MB:33751040=76
+echo MB:33751040=77
+echo MB:33751040=78
+echo MB:33751040=79
+echo MB:33751040=80
+echo MB:33751040=81
+echo MB:33751040=82
+echo MB:33751040=83
+echo MB:33751040=84
+echo MB:33751040=85
+echo MB:33751040=86
+echo MB:33751040=87
+echo MB:33751040=88
+echo MB:33751040=89
+echo MB:33751040=90
+echo MB:33751040=91
+echo MB:33751040=92
+echo MB:33751040=93
+echo MB:33751040=94
+echo MB:33751040=95
+echo MB:33751040=96
+echo MB:33751040=97
+echo MB:33751040=98
+echo MB:33751040=99
+echo MB:33751040=100
+Pass: Check run_precision_test MB
+PASS [20/22]: python3 mpam_main.py MB precision
+
+Executing [21/22]: python3 mpam_main.py L3 precision
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+
+PASS [21/22]: python3 mpam_main.py L3 precision
+
+Executing [22/22]: python3 mpam_main.py task
+Pass: Check resctrl mountpoint exists
+Pass: Check mount resctrl fs
+create /sys/fs/resctrl/p1
+put pid: 2800 into p1 group
+create /sys/fs/resctrl/p1/mon_groups/m1
+create /sys/fs/resctrl/p1/mon_groups/m2
+put pid: 2807 into p1/m1 group
+put pid: 2809 into p1/m2 group
+p1/None tasks: 2800 2807 2809 
+p1/m1 tasks: 2807 
+p1/m2 tasks: 2809 
+put pid: 2809 into p1/m1 group
+p1/m1 tasks: 2807 2809 
+Pass: Check task migration
+PASS [22/22]: python3 mpam_main.py task
+############################
+# SUITE DONE, exit=0
+############################
+[ 4090.684254][ T2813] reboot: Power down

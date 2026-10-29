@@ -1,0 +1,68 @@
+=== MPAMF_IDR / PARTID_NRW_IDR (MEM MSC, 256 partid / 32 int-partid) ===
+[PASS] IDR.PARTID_MAX: got 0xff want 0xff
+[PASS] IDR.HAS_MBW_PART: got 0x1 want 0x1
+[PASS] IDR.EXT: got 0x1 want 0x1
+[PASS] IDR.HAS_PARTID_NRW: got 0x1 want 0x1
+[PASS] IDR.NO_IMPL_PART: got 0x1 want 0x1
+[PASS] IDR.HAS_ESR: got 0x1 want 0x1
+[PASS] IDR.NO_IMPL_MSMON: got 0x0 want 0x0
+[PASS] IDR.HAS_MSMON: got 0x1 want 0x1
+[PASS] IDR.HAS_RIS: got 0x0 want 0x0
+[PASS] MBW_IDR.BWA_WD: got 0x10 want 0x10
+[PASS] MBW_IDR.HAS_MIN|MAX: got 0x3 want 0x3
+[PASS] MBW_IDR.BWPBM_WD: got 0x4 want 0x4
+[PASS] PARTID_NRW_IDR.INTPARTID_MAX: got 0x1f want 0x1f
+=== MSMON idrs ===
+[PASS] MSMON_IDR.MSMON_MBWU: got 0x1 want 0x1
+[PASS] MBWUMON_IDR.NUM_MON: got 0x8 want 0x8
+[PASS] MBWUMON_IDR.HAS_LONG: got 0x1 want 0x1
+=== MBWU monitoring: counter tracks MBW_MAX ===
+[PASS] mbwu advances at full rate: got 0x1 want 0x1
+[PASS] mbwu rate scales with MBW_MAX: got 0x1 want 0x1
+[PASS] mbwu frozen when disabled: got 0x1 want 0x1
+=== narrow PARTID: default map (partid %% 32) shares configs ===
+[PASS] partid5 MBW_MAX set: got 0xaaaa want 0xaaaa
+[PASS] partid37 shares intpartid5 cfg: got 0xaaaa want 0xaaaa
+=== narrow PARTID: MPAMCFG_INTPARTID remap ===
+[PASS] partid37 INTPARTID readback: got 0x6 want 0x6
+[PASS] remapped partid37 reads fresh cfg (reset=full): got 0xffff want 0xffff
+[PASS] partid5 cfg untouched: got 0xaaaa want 0xaaaa
+[PASS] partid5 default INTPARTID: got 0x5 want 0x5
+=== narrowing indirection routes cfg writes via map ===
+[PASS] partid37 cfg after remap: got 0xbbbb want 0xbbbb
+[PASS] partid6 (same intpartid) sees 0xBBBB: got 0xbbbb want 0xbbbb
+=== guest-error bounds checks ===
+[PASS] OOR ris write rejected (still alive): got 0x1 want 0x1
+[PASS] part_sel clamped, INTPARTID=cfg[255]: got 0x1f want 0x1f
+=== v2: PRI on the memory-side MSC (backs the MBPRI pseudo-resource) ===
+[PASS] mem PRI_IDR.HAS_INTPRI: got 0x1 want 0x1
+[PASS] mem PRI_IDR.INTPRI_WD: got 0x2 want 0x2
+[PASS] mem IDR.HAS_PRI_PART: got 0x1 want 0x1
+[PASS] mem PRI write/readback: got 0x10002 want 0x10002
+=== v2: MBW_MAX HARDLIM bit (backs MBHDL) ===
+[PASS] mem MBW_MAX.HARDLIM: got 0x1 want 0x1
+[PASS] mem MBW_MAX value: got 0x25 want 0x25
+=== v2: L3 cache MSC CMIN / CASSOC / PRI (back L3MIN/L3MAX/L3PRI) ===
+[PASS] L3 CMIN write/readback: got 0x5 want 0x5
+[PASS] L3 CASSOC write/readback: got 0x3 want 0x3
+[PASS] L3 PRI write/readback: got 0x2 want 0x2
+[PASS] CMIN is per-partid: got 0x9 want 0x9
+[PASS] CMIN partid0 untouched: got 0x5 want 0x5
+=== v2: CSU occupancy = capacity x CPBM fraction (L3 MSC) ===
+[PASS] L3 MSMON_IDR.MSMON_CSU: got 0x1 want 0x1
+[PASS] L3 CSUMON_IDR.NUM_MON: got 0x4 want 0x4
+[PASS] CSU @ 50% CBM: got 0x1000000 want 0x1000000
+[PASS] CSU @ 100% CBM: got 0x2000000 want 0x2000000
+[PASS] CSU disabled reads 0: got 0x0 want 0x0
+=== v2: first L2 cache MSC has CSU + MBWU too ===
+[PASS] L2 MSMON_IDR.MSMON_CSU: got 0x1 want 0x1
+[PASS] L2 MBWU advances: got 0x1 want 0x1
+=== QMP query-mpam-cache (cache MSC introspection) ===
+cache MSCs: 4
+  level=2 cpu=1 IDR.CPOR=1 IDR.CCAP=1 IDR.NRW=1 NRW_IDR=0x1f
+  level=2 cpu=0 IDR.CPOR=1 IDR.CCAP=1 IDR.NRW=1 NRW_IDR=0x1f
+  level=3 cpu=1 IDR.CPOR=1 IDR.CCAP=1 IDR.NRW=1 NRW_IDR=0x1f
+  level=3 cpu=0 IDR.CPOR=1 IDR.CCAP=1 IDR.NRW=1 NRW_IDR=0x1f
+[PASS] cache MSC count: got 0x4 want 0x4
+
+RESULT: ALL CHECKS PASSED

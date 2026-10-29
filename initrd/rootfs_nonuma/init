@@ -1,0 +1,82 @@
+#!/bin/sh
+# No-NUMA MPAM verification: boot -M virt,mpam=on with NO -numa on the
+# QEMU command line.  Exercises the cover-letter TODO "default to a single
+# node when none is specified": QEMU must still create one memory MSC
+# covering implicit node 0 (ACPI locator proximity domain 0 -- the mainline
+# driver's pxm_to_node() NUMA_NO_NODE fallback resolves it to node 0),
+# plus the usual per-topology L3/L2 cache MSCs.
+#
+# Also dumps the full MPAM ACPI table (and the PPTT header) so the host
+# side can structurally validate them -- the local stand-in for the RFC's
+# "ACPI table unit tests" TODO.
+/bin/busybox --install -s /bin 2>/dev/null
+mkdir -p /proc /sys /dev /tmp
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+echo "=== MARKER:USERSPACE-UP ==="
+sleep 8
+mkdir -p /sys/kernel/debug 2>/dev/null
+mount -t debugfs none /sys/kernel/debug 2>/dev/null
+echo "module mpam +p" > /sys/kernel/debug/dynamic_debug/control 2>/dev/null && echo "DYNDBG-OK"
+
+echo "=== [0] NUMA view without -numa (expect node0 only, no SRAT) ==="
+ls /sys/devices/system/node/ 2>/dev/null | sed 's/^/NODE: /'
+for n in /sys/devices/system/node/node*; do
+  [ -d "$n" ] && echo "$(basename $n): cpulist=$(cat $n/cpulist 2>/dev/null)"
+done
+echo "node possible: $(cat /sys/devices/system/node/possible 2>/dev/null)"
+dmesg | grep -aiE "SRAT|NUMA" | head -15 | sed 's/^/NUMA-DMESG: /'
+
+echo "=== [1] ACPI table inventory (SRAT must be absent) ==="
+ls /sys/firmware/acpi/tables/ 2>/dev/null | sed 's/^/ACPITBL: /'
+[ -e /sys/firmware/acpi/tables/SRAT ] && echo "SRAT-PRESENT" || echo "SRAT-ABSENT"
+
+echo "=== [2] MPAM MSC devices (expect 3: mem + L3 + L2) ==="
+ls /sys/bus/platform/devices/ | grep mpam_msc | sed 's/^/MSC: /'
+
+echo "=== [3] resctrl mount ==="
+mkdir -p /sys/fs/resctrl
+mount -t resctrl resctrl /sys/fs/resctrl -o l2 && echo "RESCTRL-MOUNT-OK l2" || {
+  mount -t resctrl resctrl /sys/fs/resctrl && echo "RESCTRL-MOUNT-OK plain" || echo "RESCTRL-MOUNT-FAIL"
+}
+
+echo "=== [4] resource inventory ==="
+for r in L3 L2 MB MBPRI MBMIN MBOPT MBHDL; do
+  [ -d /sys/fs/resctrl/info/$r ] || continue
+  ncl=$(cat /sys/fs/resctrl/info/$r/num_closids 2>/dev/null)
+  echo "info/$r/num_closids: $ncl"
+done
+cat /sys/fs/resctrl/info/L3_MON/mon_features 2>/dev/null | sed 's/^/L3_MON/mon_features: /'
+cat /sys/fs/resctrl/info/L2_MON/mon_features 2>/dev/null | sed 's/^/L2_MON/mon_features: /'
+
+echo "=== [5] schemata: initial state ==="
+cat /sys/fs/resctrl/schemata 2>/dev/null | grep -E "MB:|L3:|L2:" | sed 's/^/SCHEMATA: /'
+
+echo "=== [6] schemata writes: MB + L3, then readback ==="
+echo "MB:33751040=50"   > /sys/fs/resctrl/schemata 2>/dev/null && echo "WRITE-OK   [MB:33751040=50"
+echo "L3:33751040=55555555" > /sys/fs/resctrl/schemata 2>/dev/null && echo "WRITE-OK   [L3:33751040=55555555"
+sleep 1
+cat /sys/fs/resctrl/schemata 2>/dev/null | grep -E "MB:|L3:|L2:" | sed 's/^/SCHEMATA: /'
+
+echo "=== [7] monitor domains ==="
+ls /sys/fs/resctrl/mon_data/ 2>/dev/null | sed 's/^/MONDIR: /'
+
+echo "=== [8] MPAM interrupts ==="
+cat /proc/interrupts | grep -i mpam | sed 's/^/IRQ: /'
+
+echo "=== [9] dmesg (mpam/resctrl) ==="
+dmesg | grep -iE "mpam|resctrl|proximity" | tail -40 | sed 's/^/DMESG: /'
+
+echo "=== [10] full MPAM ACPI table ==="
+sz=$(wc -c < /sys/firmware/acpi/tables/MPAM 2>/dev/null)
+echo "MPAM-SIZE: $sz"
+od -A x -t x1 /sys/firmware/acpi/tables/MPAM 2>/dev/null | sed 's/^/MPAMTBL: /'
+
+echo "=== [11] PPTT header + size ==="
+psz=$(wc -c < /sys/firmware/acpi/tables/PPTT 2>/dev/null)
+echo "PPTT-SIZE: $psz"
+od -A x -t x1 /sys/firmware/acpi/tables/PPTT 2>/dev/null | head -4 | sed 's/^/PPTTTBL: /'
+
+echo "=== MARKER:DONE ==="
+sleep 900

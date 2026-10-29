@@ -1,0 +1,45 @@
+#!/bin/sh
+# Multi-topology MPAM verification: 2 sockets x 2 clusters x 2 cores,
+# 2 NUMA nodes. Evidence: per-socket L3 domains, per-cluster L2 domains,
+# per-node MB domains, one interrupt pair per MSC.
+/bin/busybox --install -s /bin 2>/dev/null
+mkdir -p /proc /sys /dev /tmp
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+echo "=== MARKER:USERSPACE-UP ==="
+sleep 8
+# enable mpam pr_debug so resource-pick decisions land in dmesg
+mkdir -p /sys/kernel/debug 2>/dev/null
+mount -t debugfs none /sys/kernel/debug 2>/dev/null
+echo "module mpam +p" > /sys/kernel/debug/dynamic_debug/control 2>/dev/null && echo "DYNDBG-OK"
+echo "=== [0] NUMA topology (SRAT view) ==="
+ls /sys/devices/system/node/ | sed 's/^/NODE: /'
+for n in /sys/devices/system/node/node*; do
+  [ -d "$n" ] && echo "$(basename $n): cpulist=$(cat $n/cpulist 2>/dev/null)"
+done
+dmesg | grep -aiE "SRAT|NUMA" | head -20 | sed 's/^/NUMA-DMESG: /'
+echo "=== [1] MPAM MSC devices ==="
+ls /sys/bus/platform/devices/ | grep mpam_msc | sed 's/^/MSC: /'
+mkdir -p /sys/fs/resctrl
+mount -t resctrl resctrl /sys/fs/resctrl -o l2 && echo "RESCTRL-MOUNT-OK l2" || {
+  mount -t resctrl resctrl /sys/fs/resctrl && echo "RESCTRL-MOUNT-OK plain" || echo "RESCTRL-MOUNT-FAIL"
+}
+echo "=== [2] resource/domain inventory ==="
+for r in L3 L2 MB; do
+  [ -d /sys/fs/resctrl/info/$r ] || continue
+  echo "info/$r:"
+  ls /sys/fs/resctrl/info/$r/ | sed 's/^/  FILE: /'
+done
+echo "--- schemata (domain ids per resource) ---"
+cat /sys/fs/resctrl/schemata 2>/dev/null | sed 's/^/SCHEMATA: /'
+echo "=== [3] monitor domains ==="
+ls /sys/fs/resctrl/mon_data/ 2>/dev/null | sed 's/^/MONDIR: /'
+echo "=== [4] interrupts ==="
+cat /proc/interrupts | grep -E "mpam|^" | sed 's/^/IRQ: /' | grep -E "mpam|IRQ:.*CPU" | head -20
+echo "=== [5] dmesg ==="
+dmesg | grep -iE "mpam|resctrl|mba" | tail -60 | sed 's/^/DMESG: /'
+echo "=== [6] raw MPAM ACPI table (first 0x180 bytes) ==="
+od -A x -t x1 /sys/firmware/acpi/tables/MPAM 2>/dev/null | head -48 | sed 's/^/MPAMTBL: /'
+echo "=== MARKER:DONE ==="
+sleep 900

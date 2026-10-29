@@ -1,0 +1,10 @@
+# 生成物：initrd 由 build-initrd.sh / 各测试脚本从 initrd/rootfs*/ 现场构建
+initrd/*.gz
+initrd/*.gz.bak
+
+# QEMU pflash 固件镜像（每个 64MB，可由 QEMU 安装包重新拷贝）
+logs/*.fd
+
+# Python
+__pycache__/
+*.pyc

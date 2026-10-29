@@ -1,0 +1,27 @@
+#!/bin/sh
+# End-to-end interrupt path test: inject a real MPAM error (out-of-range
+# RIS in MPAMCFG_PART_SEL -> ESR.ERR_CODE=8) via devmem on the L3 cache
+# MSC (0x0B00A000) and watch the guest error-irq handler run.
+/bin/busybox --install -s /bin 2>/dev/null
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+echo "=== MARKER:USERSPACE-UP ==="
+echo "=== [1] wait for MPAM probe (ECR.INTEN should be 1) ==="
+sleep 8
+MSC_L3=0x0B00A000
+devmem() { busybox devmem "$@"; }
+echo "pre: ECR=$(devmem $((MSC_L3+0xf0)))  ESR=$(devmem $((MSC_L3+0xf8)))/$(devmem $((MSC_L3+0xfc)))"
+mkdir -p /sys/fs/resctrl
+mount -t resctrl resctrl /sys/fs/resctrl && echo "RESCTRL-OK-PRE" || echo "RESCTRL-FAIL-PRE"
+grep mpam /proc/interrupts | sed 's/^/PRE-IRQ: /'
+echo "=== [2] INJECT: PART_SEL RIS=15 (Undefined_RIS_PART_SEL) ==="
+devmem $((MSC_L3+0x100)) 32 $(( (15<<24) | 5 ))
+sleep 4
+echo "=== [3] post-injection ==="
+echo "post: ECR=$(devmem $((MSC_L3+0xf0)))  ESR=$(devmem $((MSC_L3+0xf8)))/$(devmem $((MSC_L3+0xfc)))"
+grep -E "mpam|resctrl" /proc/interrupts | sed 's/^/POST-IRQ: /'
+echo "--- dmesg ---"
+dmesg | grep -iE "mpam|resctrl|error irq" | tail -40 | sed 's/^/DMESG: /'
+echo "=== MARKER:DONE ==="
+sleep 900

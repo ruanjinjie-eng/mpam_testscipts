@@ -1,0 +1,43 @@
+QEMU pid 1286933, log /home/r00799764/community/mpam_qemu_test_v2/logs/olk_boot.log
+smp-cache qom-set: {'return': {}}
+preconfig smp-cache configured
+[09:19:46] guest userspace is up
+[09:20:01] guest verification script finished
+
+=== host-side L3 cache MSC introspection (@ 0xb00a000) ===
+part_sel : INTPARTID(map)  PRI(IN:DSP)  CMIN  CMAX  CASSOC  CPBM(w0)
+       0 : 0x0000          0x00:0x02   0x0000 0x0000  0xffff    0x55555555  <-- driver programmed
+       1 : 0x0001          0x00:0x03   0x0000 0xffff  0xffff    0xffffffff  <-- driver programmed
+       2 : 0x0002          0x00:0x03   0x0000 0xffff  0xffff    0xffffffff  <-- driver programmed
+       3 : 0x0003          0x00:0x03   0x0000 0xffff  0xffff    0xffffffff  <-- driver programmed
+
+=== host-side L2 cache MSC introspection (@ 0xb00e000) ===
+part_sel : INTPARTID(map)  PRI(IN:DSP)  CMIN  CMAX  CASSOC  CPBM(w0)
+       0 : 0x0000          0x00:0x01   0x0000 0x0000  0xffff    0x0000ffff  <-- driver programmed
+       1 : 0x0001          0x00:0x03   0x0000 0xffff  0xffff    0xffffffff  <-- driver programmed
+       2 : 0x0002          0x00:0x03   0x0000 0xffff  0xffff    0xffffffff  <-- driver programmed
+       3 : 0x0003          0x00:0x03   0x0000 0xffff  0xffff    0xffffffff  <-- driver programmed
+
+=== host-side MSC introspection (mem MSC @ 0x0b006000) ===
+part_sel : PRI(IN)  MBW_MIN  MBW_MAX  HARDLIM  MBW_PROP  MBW_PBM(n/16)
+       0 : 0x0001   0x3fff    0x1fff     Y        0x0000     0x000f (4/16)  <-- driver programmed
+       1 : 0x0003   0x0000    0xffff     -        0x0000     0x000f (4/16)  <-- driver programmed
+       2 : 0x0003   0x0000    0xffff     -        0x0000     0x000f (4/16)  <-- driver programmed
+       3 : 0x0003   0x0000    0xffff     -        0x0000     0x000f (4/16)  <-- driver programmed
+       4 : 0x0003   0x0000    0xffff     -        0x0000     0x000f (4/16)  <-- driver programmed
+       5 : 0x0003   0x0000    0xffff     -        0x0000     0x000f (4/16)  <-- driver programmed
+       6 : 0x0003   0x0000    0xffff     -        0x0000     0x000f (4/16)  <-- driver programmed
+       7 : 0x0003   0x0000    0xffff     -        0x0000     0x000f (4/16)  <-- driver programmed
+
+=== host-side CSU occupancy model check (L3 MSC, capacity 32MiB) ===
+partid0 CPBM=0x55555555 (16/32 bits) CSU=16777216 expect=16777216 [OK]
+
+=== host-side L2 MSC MBWU counter sample ===
+L2 MBWU: 0 -> 10004200000 (delta 10004200000)
+
+=== cache MSCs via QMP: 2 ===
+  L2 cpu0: cfg_part_sel=0x3 cpbm=[65535, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295]
+  L3 cpu0: cfg_part_sel=0x0 cpbm=[1431655765, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295, 4294967295]
+
+VERIFICATION ARTIFACTS: guest log has driver messages + resctrl results;
+host-side non-default MSC registers: L3=4 L2=4 mem=8

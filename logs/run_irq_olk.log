@@ -1,0 +1,53 @@
+
+[1m== kernel under test ==[0m
+-rw-r--r-- 1 root root 33401344 10月 13 23:00 /home/r00799764/community/OLK-6.6/arch/arm64/boot/Image
+  [36m[INFO][0m banner: Linux version 6.6.0+ (root@r00799764-ThinkCentre-M920t-N000) (aarch64-linux-gnu-gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) # SMP 
+  [36m[INFO][0m flavour: olk  (cmdline: console=ttyAMA0 earlycon=pl011,0x09000000 rdinit=/init arm64.mpam, cpu: max)
+
+[1m== 1/4 build guest initramfs ==[0m
+  [32m[PASS][0m initrd/olk-initrd.gz built
+
+[1m== 2/4 register-level qtest (kernel-independent, incl. PRI/CMIN/CSU) ==[0m
+  [32m[PASS][0m 48 register checks passed
+
+[1m== 3/4 boot + guest verification + host-side MSC recon (TCG, minutes) ==[0m
+  orchestrator rc=0, guest log: /home/r00799764/community/mpam_qemu_test_v2/logs/olk_boot.log
+
+[1m== 4/4 verdict ==[0m
+  [32m[PASS][0m resctrl mount
+  [32m[PASS][0m narrow PARTID: num_closids=32 (intpartid_max=31 honoured)
+  [32m[PASS][0m L3 non-contiguous bitmap 55555555 accepted
+  [32m[PASS][0m schemata readback (L3 bitmap lands)
+  [32m[PASS][0m MB schemata accepted (flavour-appropriate syntax)
+  [32m[PASS][0m host-side L3 MSC CPBM reflects guest schemata (register-level closure)
+  [32m[PASS][0m guest verification completed
+  [36m[INFO][0m guest L3PRI=2 write (olk: not required)
+  [36m[INFO][0m guest L3MIN=25 write (olk: not required)
+  [36m[INFO][0m guest L3MAX=50 write (olk: not required)
+  [36m[INFO][0m guest L2PRI=1 write (olk: not required)
+  [36m[INFO][0m guest L2MIN=25 write (olk: not required)
+  [36m[INFO][0m guest L2MAX=50 write (olk: not required)
+  [36m[INFO][0m guest MBPRI=1 write (olk: not required)
+  [36m[INFO][0m guest MBMIN=25 write MISSING (olk: not required)
+  [36m[INFO][0m guest MBOPT=8191 write MISSING (olk: not required)
+  [36m[INFO][0m guest MBHDL=1 write MISSING (olk: not required)
+  [36m[INFO][0m guest L3PRI readback MISSING (olk: not required)
+  [36m[INFO][0m guest L3MIN readback MISSING (olk: not required)
+  [36m[INFO][0m guest L3MAX readback MISSING (olk: not required)
+  [36m[INFO][0m host L3 MSC: PRI=2 CMIN=0x3000 CMAX=0x7000 (partid0) MISSING (olk: not required)
+  [36m[INFO][0m host L2 MSC: PRI=1 CMIN=0x3000 CMAX=0x7000 (partid0) MISSING (olk: not required)
+  [36m[INFO][0m host mem MSC: PRI=1 + HARDLIM (partid0) MISSING (olk: not required)
+  [36m[INFO][0m host CSU model OK
+  [36m[INFO][0m guest llc_occupancy = 16MiB (L3 CBM 50%) MISSING (olk: not required)
+  [36m[INFO][0m L2 monitor resource: l2c_occupancy + mbm_core_bytes files (olk: not required)
+  [36m[INFO][0m L2 monitor domain + files created (mon_L2_*) MISSING (olk: not required)
+  [36m[INFO][0m host L2 CSU model: 256KiB @ 50% CBM MISSING (olk: not required)
+  [36m[INFO][0m guest l2c_occupancy = 256KiB (L2 CBM 50%) MISSING (olk: not required)
+  [36m[INFO][0m guest mbm_core_bytes MISSING (olk: not required)
+  [36m[INFO][0m CDP mount (olk: not required)
+  [36m[INFO][0m CDP num_closids=16
+  [36m[INFO][0m CDP L3DATA schemata write+readback (olk: not required)
+  [36m[INFO][0m resctrl remount after CDP (olk: not required)
+  [36m[INFO][0m MBWU clamp after v2 mount churn: 0 delta (olk; canonical single-mount clamp covered by v1 package)
+
+ALL STAGES PASSED — MPAM narrow PARTID + v2 features verified (olk kernel: /home/r00799764/community/OLK-6.6/arch/arm64/boot/Image).
