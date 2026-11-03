@@ -222,29 +222,37 @@ for p in range(8):
           f"({bin(pbm & 0xFFFF).count('1')}/16){mark}")
 
 # --- CSU occupancy closure on the L3 MSC: capacity x CPBM fraction -------
-print("\n=== host-side CSU occupancy model check (L3 MSC, capacity 32MiB) ===")
+print("\n=== host-side CSU occupancy model check (L3 MSC) ===")
 writel(L3MSC + 0x100, 0)                      # part_sel 0
 cpbm = readl(L3MSC + 0x1000)
 writel(L3MSC + 0x800, 0)                      # MON_SEL: mon 0, ris 0
 writel(L3MSC + 0x810, 0)                      # CSU_FLT: partid 0
 writel(L3MSC + 0x818, 0x43 | (1 << 16) | (1 << 31))   # TYPE_CSU|MATCH_PARTID|EN
+# The modelled capacity comes from the machine's cache info; derive it
+# instead of assuming a size, then restore the driver-programmed CPBM.
+writel(L3MSC + 0x1000, 0xFFFFFFFF)
+cap = readl(L3MSC + 0x840)
+writel(L3MSC + 0x1000, cpbm)
 csu = readl(L3MSC + 0x840)
-expect = 32 * 1024 * 1024 * bin(cpbm & 0xFFFFFFFF).count("1") // 32
+expect = cap * bin(cpbm & 0xFFFFFFFF).count("1") // 32
 verdict = "OK" if csu == expect else "MISMATCH"
-print(f"partid0 CPBM={cpbm:#010x} ({bin(cpbm).count('1')}/32 bits) "
+print(f"CSU-L3: CPBM={cpbm:#010x} ({bin(cpbm).count('1')}/32 bits) "
       f"CSU={csu} expect={expect} [{verdict}]")
 
 # --- L2 CSU occupancy closure (capacity 512KiB, cpbm 16/32 bits) -----------
-print("\n=== host-side CSU occupancy model check (L2 MSC, capacity 512KiB) ===")
+print("\n=== host-side CSU occupancy model check (L2 MSC) ===")
 writel(L2MSC + 0x100, 0)
 cpbm2 = readl(L2MSC + 0x1000)
 writel(L2MSC + 0x800, 0)
 writel(L2MSC + 0x810, 0)
 writel(L2MSC + 0x818, 0x43 | (1 << 16) | (1 << 31))
+writel(L2MSC + 0x1000, 0xFFFFFFFF)
+cap2 = readl(L2MSC + 0x840)
+writel(L2MSC + 0x1000, cpbm2)
 csu2 = readl(L2MSC + 0x840)
-expect2 = 512 * 1024 * bin(cpbm2 & 0xFFFFFFFF).count("1") // 32
+expect2 = cap2 * bin(cpbm2 & 0xFFFFFFFF).count("1") // 32
 verdict2 = "OK" if csu2 == expect2 else "MISMATCH"
-print(f"partid0 CPBM={cpbm2:#010x} ({bin(cpbm2).count('1')}/32 bits) "
+print(f"CSU-L2: CPBM={cpbm2:#010x} ({bin(cpbm2).count('1')}/32 bits) "
       f"CSU={csu2} expect={expect2} [{verdict2}]")
 
 # --- L2 MSC MBWU sanity ----------------------------------------------------

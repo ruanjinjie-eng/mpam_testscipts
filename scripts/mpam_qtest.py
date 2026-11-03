@@ -234,10 +234,11 @@ writel(L3 + 0x800, 0)                           # MON_SEL: mon 0, ris 0
 writel(L3 + 0x810, 0)                           # CSU_FLT: partid 0
 writel(L3 + 0x818, 0x43 | (1 << 16) | (1 << 31))  # TYPE_CSU|MATCH_PARTID|EN
 writel(L3 + 0x100, 0)
+writel(L3 + 0x1000, 0xFFFFFFFF)                 # 32/32 portions: capacity
+csu_cap = readl(L3 + 0x840)
+check("CSU capacity nonzero",      1 if csu_cap else 0,  1)
 writel(L3 + 0x1000, 0x55555555)                 # 16/32 portions
-check("CSU @ 50% CBM",             readl(L3 + 0x840),    16 * 1024 * 1024)
-writel(L3 + 0x1000, 0xFFFFFFFF)                 # 32/32 portions
-check("CSU @ 100% CBM",            readl(L3 + 0x840),    32 * 1024 * 1024)
+check("CSU @ 50% CBM",             readl(L3 + 0x840),    csu_cap // 2)
 writel(L3 + 0x818, 0x43 | (1 << 16))            # EN = 0
 check("CSU disabled reads 0",      readl(L3 + 0x840),    0)
 

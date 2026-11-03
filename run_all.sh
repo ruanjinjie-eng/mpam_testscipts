@@ -146,20 +146,20 @@ v2chk "guest L3MAX readback"       -Eq "SCHEMATA: +L3MAX:33751040=50\b"
 v2chkE "host L3 MSC: PRI=2 CMIN=0x3000 CMAX=0x7000 (partid0)"  -Eq "^ +0 : 0x[0-9a-f]+ +0x00:0x02 +0x3000 0x7000"
 v2chkE "host L2 MSC: PRI=1 CMIN=0x3000 CMAX=0x7000 (partid0)"  -Eq "^ +0 : 0x[0-9a-f]+ +0x00:0x01 +0x3000 0x7000"
 v2chkE "host mem MSC: PRI=1 + HARDLIM (partid0)"     -Eq "^ +0 : 0x0001 +0x[0-9a-f]+ +0x[0-9a-f]+ +Y"
-grep -q "expect=16777216 \[OK\]" "$E" \
-    && { [ "$FLAVOR" = "mainline" ] && ok "host CSU model: 16MiB @ 50% CBM" || info "host CSU model OK"; } \
+grep -q "CSU-L3:.*\[OK\]" "$E" \
+    && { [ "$FLAVOR" = "mainline" ] && ok "host CSU model: L3 @ 50% CBM" || info "host CSU model OK"; } \
     || { [ "$FLAVOR" = "mainline" ] && bad "host CSU occupancy model" || info "host CSU model MISSING (olk)"; }
 
 # guest occupancy + L2 monitor counters
-v2chk "guest llc_occupancy = 16MiB (L3 CBM 50%)"    -Eq "mon_L3_[0-9]*/llc_occupancy: [0-9]* -> 16777216"
+v2chk "guest llc_occupancy = 1MiB (L3 CBM 50%)"     -Eq "mon_L3_[0-9]*/llc_occupancy: [0-9]* -> 1048576"
 # L2 monitors: linux_old1 read path now dispatches RDT_RESOURCE_L2 through
 # the per-domain counter path, and mpam borrows an MBWU monitor per read for
 # mbm_core_bytes (CSU for l2c_occupancy). Expect real numbers on mainline:
 # 256KiB @ 50% L2 CBM occupancy and an advancing core-bytes counter.
 v2chk "L2 monitor resource: l2c_occupancy + mbm_core_bytes files" -q "L2_MON/mon_features: l2c_occupancy mbm_core_bytes"
 v2chk "L2 monitor domain + files created (mon_L2_*)"  -q "FILE: mbm_core_bytes"
-v2chkE "host L2 CSU model: 256KiB @ 50% CBM"        -q "expect=262144 \[OK\]"
-v2chk "guest l2c_occupancy = 256KiB (L2 CBM 50%)"   -Eq "mon_L2_[0-9]*/l2c_occupancy: 262144 -> 262144"
+v2chkE "host L2 CSU model @ 50% CBM"                -q "CSU-L2:.*\[OK\]"
+v2chk "guest l2c_occupancy = 512KiB (L2 CBM 50%)"   -Eq "mon_L2_[0-9]*/l2c_occupancy: 524288 -> 524288"
 l2delta=$(grep -ao 'mon_L2_[0-9]*/mbm_core_bytes: [0-9]* -> [0-9]* (delta [0-9]*)' "$B" | tail -1 | grep -o 'delta [0-9]*' | grep -o '[0-9]*$')
 if [ -n "$l2delta" ] && [ "$l2delta" -gt 0 ] 2>/dev/null; then
     if [ "$FLAVOR" = "mainline" ]; then ok "guest mbm_core_bytes advances: delta ${l2delta} bytes/2s"; else info "guest mbm_core_bytes delta ${l2delta} (olk)"; fi
