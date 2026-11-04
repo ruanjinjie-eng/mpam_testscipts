@@ -1,0 +1,111 @@
+#!/bin/sh
+# Verify the MBA software controller (mba_MBps) on MPAM: the schemata value
+# is an absolute bandwidth target (MiB/s) and the feedback loop programs
+# MBW_MAX so that the measured bandwidth converges to it.
+#
+# QEMU models MBWU as bw-nominal-bps * MBW_MAX fraction, so the loop is
+# observable: 10 GB/s nominal is ~9536 MiB/s at full bandwidth.
+/bin/busybox --install -s /bin 2>/dev/null
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+echo "=== MARKER:USERSPACE-UP ==="
+R=/sys/fs/resctrl
+mkdir -p $R
+if ! mount -t resctrl resctrl $R -o mba_MBps; then
+  echo "MBAP-TEST: mount_failed status=[$(cat $R/info/last_cmd_status 2>/dev/null)]"
+  if mount -t resctrl resctrl $R; then
+    echo "MBAP-TEST: plain_mount_ok"
+  else
+    echo "MBAP-TEST: plain_mount_failed"
+  fi
+  echo "MBAP-TEST: RESULT=SKIP"
+  echo "=== MARKER:DONE ==="
+  sleep 3600
+fi
+echo "MBAP-TEST: mount_ok"
+i=0
+while [ $i -lt 30 ] && [ ! -d $R/info ]; do sleep 1; i=$((i+1)); done
+echo "MBAP-TEST: num_closids=$(cat $R/info/L3/num_closids 2>/dev/null)"
+echo "MBAP-TEST: assign_mode=[$(cat $R/info/L3_MON/mbm_assign_mode 2>/dev/null | tr '\n' ',')]"
+echo "MBAP-TEST: assign_on_mkdir=$(cat $R/info/L3_MON/mbm_assign_on_mkdir 2>/dev/null)"
+echo "MBAP-TEST: mba_MBps_event=$(cat $R/mba_MBps_event 2>/dev/null)"
+echo "MBAP-TEST: schemata_default=[$(cat $R/schemata 2>/dev/null | tr '\n' ',')]"
+MBDOM=$(cat $R/schemata 2>/dev/null | sed -n 's/^[[:space:]]*MB:\([0-9][0-9]*\)=.*/\1/p' | head -1)
+echo "MBAP-TEST: mb_domain=${MBDOM:-none}"
+if [ -z "$MBDOM" ]; then
+  echo "MBAP-TEST: SKIP no_mb_domain"
+  echo "=== MARKER:DONE ==="
+  sleep 3600
+fi
+MON=$(ls -d $R/mon_data/mon_L3_* 2>/dev/null | head -1)
+echo "MBAP-TEST: mon_dir=$MON"
+if [ -z "$MON" ]; then
+  echo "MBAP-TEST: SKIP no_mon_dir"
+  echo "=== MARKER:DONE ==="
+  sleep 3600
+fi
+
+# Read the MBWU counter twice, 2s apart, and report MiB/s.
+sample_mibs() {
+  A=$(cat $MON/mbm_total_bytes 2>/dev/null)
+  sleep 2
+  B=$(cat $MON/mbm_total_bytes 2>/dev/null)
+  case "$A$B" in
+    *Unavailable*|*Unassigned*|*Error*|"")
+      echo 0 ;;
+    *)
+      echo $(( (B - A) / 2 / 1048576 )) ;;
+  esac
+}
+
+BASE=$(sample_mibs)
+echo "MBAP-TEST: baseline_mibs=$BASE"
+
+# Wait until the measured bandwidth is within @2 of @1. Print each sample
+# and report the last one.
+wait_target() {
+  want=$1
+  tol=$2
+  rounds=$3
+  n=0
+  cur=0
+  while [ $n -lt $rounds ]; do
+    sleep 3
+    cur=$(sample_mibs)
+    echo "MBAP-TEST: sample want=$want got=$cur round=$n" >&2
+    if [ $cur -ge $((want - tol)) ] && [ $cur -le $((want + tol)) ]; then
+      break
+    fi
+    n=$((n+1))
+  done
+  echo $cur
+}
+
+DOWN=7000
+printf "MB:$MBDOM=$DOWN;\n" > $R/schemata 2>/dev/null \
+  && echo "MBAP-TEST: write_ok target=$DOWN" || echo "MBAP-TEST: write_fail target=$DOWN"
+echo "MBAP-TEST: readback=[$(cat $R/schemata 2>/dev/null | tr '\n' ',')]"
+GOT_DOWN=$(wait_target $DOWN 300 20)
+echo "MBAP-TEST: converged_down=$GOT_DOWN target=$DOWN"
+
+UP=9000
+printf "MB:$MBDOM=$UP;\n" > $R/schemata 2>/dev/null \
+  && echo "MBAP-TEST: write_ok target=$UP" || echo "MBAP-TEST: write_fail target=$UP"
+echo "MBAP-TEST: readback=[$(cat $R/schemata 2>/dev/null | tr '\n' ',')]"
+GOT_UP=$(wait_target $UP 300 20)
+echo "MBAP-TEST: converged_up=$GOT_UP target=$UP"
+
+# The controller must not allow disabling the counter assignment it relies on.
+echo 0 > $R/info/L3_MON/mbm_assign_on_mkdir 2>/dev/null \
+  && echo "MBAP-TEST: assign_on_mkdir_disable=ALLOWED" \
+  || echo "MBAP-TEST: assign_on_mkdir_disable=REFUSED"
+
+RESULT=FAIL
+if [ "$GOT_DOWN" -ge $((DOWN - 300)) ] && [ "$GOT_DOWN" -le $((DOWN + 300)) ] && \
+   [ "$GOT_UP" -ge $((UP - 300)) ] && [ "$GOT_UP" -le $((UP + 300)) ]; then
+  RESULT=PASS
+fi
+echo "MBAP-TEST: RESULT=$RESULT"
+echo "=== MARKER:DONE ==="
+sleep 3600

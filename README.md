@@ -145,6 +145,43 @@ python3 scripts/topo_boot_test.py [Image] [initrd.gz]
   与 L3 出口流量一一对应），非仿真缺陷；单 NUMA 拓扑（常规套件）不受影响；
 - 证据：`logs/topo_boot_test.log`。
 
+## MPAM 访存带宽绝对值分配（mba_MBps 软件控制器）
+
+`scripts/mba_mbps_test.py` + `initrd/rootfs_mba_mbps/`：验证在 MPAM 上用
+绝对带宽目标（MiB/s）而不是百分比分配，反馈环参考 Intel 的 mba_sc。
+
+```bash
+python3 scripts/mba_mbps_test.py --image [Image] [--initrd initrd.gz]
+```
+
+- 内核侧：
+  - `supports_mba_mbps()` 允许“固定分配 + mkdir 自动分配”的可分配 MBM
+    计数器（MPAM 的 ABMC）使用 mba_MBps；挂载时强制
+    `mbm_assign_on_mkdir=1`，并在控制器使用期间拒绝关闭它或 unassign
+    其事件计数器；
+  - MBM overflow worker 在软件控制器启用时先 `cpus_read_trylock()`（热插拔
+    进行中则跳过本轮控制更新）：架构写控制值可能睡眠并需要热插拔锁，
+    且该锁不能放在 `rdtgroup_mutex` 之后（与 CPU offline 路径成 ABBA）；
+  - `update_mba_bw()` 处理 `min_bw == 0`（MPAM 16-bit MBW_MAX 可到 0%）
+    避免除零；
+  - 控制器写控制值时置 `MBW_MAX.HARDLIM=1`：MPAM 的软限在空闲系统里
+    仍会放行超过 MAX 的请求，绝对目标无法保证；`MPAMF_MBW_IDR.MAX_LIM
+    = 01`（只实现软限）时直接拒绝 `mba_MBps` 挂载。
+- QEMU 侧（补丁 `../mpam_qemu_test/qemu_patches/0011-hw-arm-mpam-MBWU-follows-memory-side-bandwidth.patch`）：
+  - MBWU 速率取 MBW_MAX 与 MBW_PBM 中更严格者——主线驱动写 MBW_MAX，
+    OLK 写 PBM，另一个通常保持全 1；
+  - L3 cache MSC 自身无带宽控制时，MBWU 跟随唯一 mem MSC 的带宽控制
+    （mba_sc 假设 MBM 测到的 L3 出口流量受 MBA 限制）。
+- QEMU 侧（补丁 `../mpam_qemu_test/qemu_patches/0012-hw-arm-mpam-MBW-IDR-MAX_LIM-property.patch`）：
+  增加 `MPAMF_MBW_IDR.MAX_LIM` 和 `mbw-max-lim` 设备属性。
+- 判据：`-o mba_MBps` 挂载成功；baseline ≈9600 MiB/s；写
+  `MB:<dom>=7000` 收敛到 ~7000，再改 9000 回升到 ~9000（容差 ±300）；
+  控制器收敛后 qtest 直读 mem MSC `MPAMCFG_MBW_MAX`，要求 bit31=1；
+  `mbm_assign_on_mkdir` 写 0 返回 `EBUSY`。
+- 反例：`--max-lim 1 --expect refuse`（QEMU `-global
+  mpam-msc-mem.mbw-max-lim=1`）要求 `mba_MBps` 挂载失败、普通挂载成功。
+- 证据：`logs/mba_hardlim_pos.out`、`logs/mba_hardlim_refuse.out`。
+
 ## OLK-6.6 路径观察
 
 - OLK 驱动代际比预期新：`-o l2`/`-o cdp,l2` 均可挂载，CDP 下 num_closids 同样
