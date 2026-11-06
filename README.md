@@ -145,6 +145,81 @@ python3 scripts/topo_boot_test.py [Image] [initrd.gz]
   与 L3 出口流量一一对应），非仿真缺陷；单 NUMA 拓扑（常规套件）不受影响；
 - 证据：`logs/topo_boot_test.log`。
 
+## ABMC 新域 counter 分配（domain online）
+
+`scripts/abmc_domain_test.py` + `initrd/rootfs_abmc/`：验证 monitor domain
+重建时，已有组拿到与其他 domain 相同的可分配 MBM counter ID，而建组时
+没有分到 counter 的组不会抢走别人的 ID。
+
+拓扑：1 socket × 2 cluster × 2 core，L3 per cluster，共 2 个 L3 monitor
+domain；每个 domain 8 个 assignable counter。default + g1..g7 各占一个，
+g8 建组时已经没有 counter。热插拔前再用
+`echo "mbm_total_bytes:*=_" > g7/mbm_L3_assignments` 手动取消 g7 的分配。
+然后把第二个 cluster 的 CPU 全部离线再上线，使该 L3 domain 销毁并重建。
+
+```bash
+QEMU_BIN=/path/to/qemu-system-aarch64 \
+  python3 scripts/abmc_domain_test.py [Image]
+```
+
+`QEMU_BIN` 必须指向带 `pmg-max` 属性的 QEMU（如 `mpam-upstream-v4-split`
+分支的 `/tmp/qemu-v4-build`）；默认的 `qemu/build` 是 1 个 PMG，`num_rmids`
+会读到 32。
+
+判定：
+
+- `num_rmids=64`（QEMU 需要 `pmg-max=1`，即每个 PARTID 2 个 PMG）；
+- `num_mbm_cntrs` 两个 domain 都是 8；
+- 重建后 root、g1 在两个 domain 都是 `=e`，g8 在两个 domain 都是 `_`；
+- g7 手动取消后在两个 domain 都是 `_`，重建后仍然都是 `_`（新 domain
+  不会按 `mbm_assign_on_mkdir` 重新分配）；
+- root 在重建 domain 上能读到数值，g8 读 `Unassigned`；
+- dmesg 没有 WARNING/BUG。
+
+未覆盖：pseudo-lock 组的跳过逻辑。arm64 没有启用
+`CONFIG_RESCTRL_FS_PSEUDO_LOCK`，MPAM 也没有 prefetch-disable bits，
+QEMU 里创建不出 pseudo-lock 组；该路径目前只有 x86_64 编译覆盖。
+
+### 睡眠触发与 MPAM 共享 monitor
+
+`scripts/abmc_sleep_shared_test.py --case pm|shared`，拓扑与上面相同。
+内核需要 `CONFIG_KPROBE_EVENTS`、`CONFIG_HIBERNATION`、`CONFIG_PM_DEBUG`。
+
+```bash
+QEMU_BIN=/tmp/qemu-v4-build/qemu-system-aarch64 \
+  python3 scripts/abmc_sleep_shared_test.py --case pm [Image]
+QEMU_BIN=/tmp/qemu-v4-build/qemu-system-aarch64 \
+  python3 scripts/abmc_sleep_shared_test.py --case shared [Image]
+```
+
+`--case pm`（`initrd/rootfs_abmc_pm/`）：哪些睡眠状态会重建 monitor
+domain。用 `/sys/power/pm_test` 走真实内核路径，在
+`resctrl_{online,offline}_mon_domain()` 上挂 kprobe 计数：
+
+| 状态 | pm_test | 结果 |
+|---|---|---|
+| freeze（s2idle） | freezer | CPU 不下线，domain 不重建 |
+| mem | processors | QEMU virt 只有 s2idle，内核拒绝该测试级别，报 SKIP |
+| disk（休眠） | processors | `pm_sleep_disable_secondary_cpus()` 下线非 boot CPU，第二个 domain 重建 1 次；root、g1 在新 domain 必须仍是 `=e` |
+
+挂起到内存（PSCI SYSTEM_SUSPEND）QEMU 不支持，没有覆盖；它同样经过
+`pm_sleep_disable_secondary_cpus()`。
+
+`--case shared`（`initrd/rootfs_abmc_shared/`）：MPAM 上的后果。default
+组拿 counter 0、g1 拿 counter 1，热插拔重建第二个 domain 后手动给 g1
+在新 domain 分配，再用 `mpam_msmon_read()` 上的 kprobe 记录每次读用的
+硬件 monitor。判定 g1 在两个 domain 都读 monitor 1、default 组读
+monitor 0。修复前手动分配给 g1 最低空闲 counter 0，MPAM 的 counter ID
+到 monitor 的映射整个资源共用，于是 g1 在两个 domain 都读 monitor 0，
+即 default 组的 monitor。
+
+2026-11-06 结果（父提交 `5477ee42f619` vs 分支 tip `f56e1456b2c1`）：
+
+| 用例 | 父提交 | tip |
+|---|---|---|
+| pm / disk | 新 domain 上 root、g1 为 `=_` | `=e` |
+| shared | g1 两个 domain 都读 mon=0 | g1 两个 domain 都读 mon=1 |
+
 ## MPAM 访存带宽绝对值分配（mba_MBps 软件控制器）
 
 `scripts/mba_mbps_test.py` + `initrd/rootfs_mba_mbps/`：验证在 MPAM 上用

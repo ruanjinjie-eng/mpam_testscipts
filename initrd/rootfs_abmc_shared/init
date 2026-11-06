@@ -1,0 +1,51 @@
+#!/bin/sh
+# Shared MPAM monitor after a monitor domain is re-created.
+#
+# Mount with the default group (counter 0) and g1 (counter 1), offline
+# both CPUs of the second L3 domain, bring one back, and assign g1 by
+# hand on the new domain. Before the fix g1 gets the lowest free counter,
+# 0, which is the default group's counter on the first domain. A kprobe
+# on mpam_msmon_read() prints which hardware monitor each read uses.
+/bin/busybox --install -s /bin 2>/dev/null
+mkdir -p /proc /sys /dev /tmp
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+mkdir -p /sys/fs/resctrl
+R=/sys/fs/resctrl
+T=/sys/kernel/tracing
+mount -t tracefs nodev $T 2>/dev/null || mount -t debugfs nodev /sys/kernel/debug
+[ -d $T/events ] || T=/sys/kernel/debug/tracing
+mount -t resctrl resctrl $R && echo "MOUNT-OK" || echo "MOUNT-FAIL"
+echo "NUM-MBM-CNTRS: $(cat $R/info/L3_MON/num_mbm_cntrs 2>&1)"
+mkdir $R/g1 && echo "MKDIR-G1-OK"
+DOM0=$(ls $R/mon_data | head -1)
+echo "ROOT-ASSIGN-BEFORE: $(cat $R/mbm_L3_assignments 2>&1)"
+echo "G1-ASSIGN-BEFORE: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+echo 0 > /sys/devices/system/cpu/cpu3/online
+echo 0 > /sys/devices/system/cpu/cpu2/online
+echo "DOMS-OFF: $(ls $R/mon_data | tr '\n' ' ')"
+echo 1 > /sys/devices/system/cpu/cpu2/online
+echo "DOMS-AFTER: $(ls $R/mon_data | tr '\n' ' ')"
+DOM1=$(ls $R/mon_data | grep -v "^$DOM0\$" | head -1)
+ID1=${DOM1#mon_L3_}
+echo "G1-ASSIGN-AFTER-ONLINE: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+echo "mbm_total_bytes:$ID1=e" > $R/g1/mbm_L3_assignments
+echo "G1-HAND-ASSIGN-RC: $?"
+echo "ROOT-ASSIGN-FINAL: $(cat $R/mbm_L3_assignments 2>&1)"
+echo "G1-ASSIGN-FINAL: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+echo 'p:mpamrd mpam_msmon_read comp=+0(%x0):u32 mon=+0(%x1):u32 partid=+8(%x1):u32 pmg=+4(%x1):u8' >> $T/kprobe_events
+echo "KPROBE-RC: $?"
+echo 1 > $T/events/kprobes/mpamrd/enable
+echo > $T/trace
+echo "ROOT-READ $DOM0: $(cat $R/mon_data/$DOM0/mbm_total_bytes 2>&1)"
+echo "TRACE-ROOT-$DOM0: $(grep -o 'comp=[0-9]* mon=[0-9]* partid=[0-9]* pmg=[0-9]*' $T/trace | tr '\n' ';')"
+echo > $T/trace
+echo "G1-READ $DOM1: $(cat $R/g1/mon_data/$DOM1/mbm_total_bytes 2>&1)"
+echo "TRACE-G1-$DOM1: $(grep -o 'comp=[0-9]* mon=[0-9]* partid=[0-9]* pmg=[0-9]*' $T/trace | tr '\n' ';')"
+echo > $T/trace
+echo "G1-READ $DOM0: $(cat $R/g1/mon_data/$DOM0/mbm_total_bytes 2>&1)"
+echo "TRACE-G1-$DOM0: $(grep -o 'comp=[0-9]* mon=[0-9]* partid=[0-9]* pmg=[0-9]*' $T/trace | tr '\n' ';')"
+echo "DMESG-WARN: $(dmesg | grep -cE 'WARNING: |BUG: |Call trace:')"
+echo "=== MARKER:DONE ==="
+sleep 300

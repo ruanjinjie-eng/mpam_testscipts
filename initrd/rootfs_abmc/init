@@ -1,0 +1,58 @@
+#!/bin/sh
+# ABMC counter assignment when a monitor domain is re-created.
+#
+# 8 groups share 8 assignable MBM counters: the default group and g1..g7
+# take one each, g8 gets none. Offline all CPUs of the second L3 monitor
+# domain and bring one back. The domain comes online with an empty
+# cntr_cfg array; the kernel must give the existing groups the counter
+# IDs they already use on the other domain, and must not let g8 take one
+# of those IDs.
+#
+# Before the hotplug, g7's counter is removed by hand on every domain.
+# That frees one counter, but neither g7 nor g8 has a counter anywhere, so
+# both must stay unassigned on the re-created domain: mbm_assign_on_mkdir
+# only applies to mkdir, and the user's unassignment must be kept.
+/bin/busybox --install -s /bin 2>/dev/null
+mkdir -p /proc /sys /dev /tmp
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+mkdir -p /sys/fs/resctrl
+R=/sys/fs/resctrl
+mount -t resctrl resctrl $R && echo "MOUNT-OK" || echo "MOUNT-FAIL"
+echo "NUM-MBM-CNTRS: $(cat $R/info/L3_MON/num_mbm_cntrs 2>&1)"
+echo "NUM-RMIDS: $(cat $R/info/L3_MON/num_rmids 2>&1)"
+i=1
+while [ $i -le 8 ]; do
+	mkdir $R/g$i 2>/tmp/e$i || echo "G$i-FAIL: $(cat /tmp/e$i)"
+	i=$((i + 1))
+done
+echo "GROUPS: $(ls -d $R/g* 2>/dev/null | wc -l)"
+echo "ROOT-ASSIGN-BEFORE: $(cat $R/mbm_L3_assignments 2>&1)"
+echo "G8-ASSIGN-BEFORE: $(cat $R/g8/mbm_L3_assignments 2>&1)"
+echo "mbm_total_bytes:*=_" > $R/g7/mbm_L3_assignments
+echo "G7-UNASSIGN-RC: $?"
+echo "G7-ASSIGN-BEFORE: $(cat $R/g7/mbm_L3_assignments 2>&1)"
+echo "DOMS-BEFORE: $(ls $R/mon_data 2>&1 | tr '\n' ' ')"
+echo 0 > /sys/devices/system/cpu/cpu3/online
+echo "OFFLINE3-RC=$?"
+echo 0 > /sys/devices/system/cpu/cpu2/online
+echo "OFFLINE2-RC=$?"
+echo "DOMS-OFF: $(ls $R/mon_data 2>&1 | tr '\n' ' ')"
+echo 1 > /sys/devices/system/cpu/cpu2/online
+echo "ONLINE2-RC=$?"
+echo 1 > /sys/devices/system/cpu/cpu3/online
+echo "ONLINE3-RC=$?"
+echo "DOMS-AFTER: $(ls $R/mon_data 2>&1 | tr '\n' ' ')"
+for d in $(ls $R/mon_data 2>/dev/null); do
+	echo "ROOT $d: $(cat $R/mon_data/$d/mbm_total_bytes 2>&1)"
+	echo "G1 $d: $(cat $R/g1/mon_data/$d/mbm_total_bytes 2>&1)"
+	echo "G8 $d: $(cat $R/g8/mon_data/$d/mbm_total_bytes 2>&1)"
+done
+echo "ROOT-ASSIGN-AFTER: $(cat $R/mbm_L3_assignments 2>&1)"
+echo "G1-ASSIGN-AFTER: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+echo "G7-ASSIGN-AFTER: $(cat $R/g7/mbm_L3_assignments 2>&1)"
+echo "G8-ASSIGN-AFTER: $(cat $R/g8/mbm_L3_assignments 2>&1)"
+echo "DMESG-WARN: $(dmesg | grep -cE 'WARNING: |BUG: |Call trace:')"
+echo "=== MARKER:DONE ==="
+sleep 300

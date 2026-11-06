@@ -1,0 +1,53 @@
+#!/bin/sh
+# Does a system sleep re-create the monitor domains?
+#
+# suspend/hibernate take the non-boot CPUs offline through
+# pm_sleep_disable_secondary_cpus(). /sys/power/pm_test=processors runs
+# the real path up to that point, waits pm_test_delay seconds and brings
+# the CPUs back, without needing firmware or a swap device. A kprobe on
+# resctrl_online_mon_domain() counts monitor domains coming online, and
+# the counter state of the groups is compared before and after.
+/bin/busybox --install -s /bin 2>/dev/null
+mkdir -p /proc /sys /dev /tmp
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+mkdir -p /sys/fs/resctrl
+R=/sys/fs/resctrl
+T=/sys/kernel/tracing
+mount -t tracefs nodev $T 2>/dev/null
+mount -t resctrl resctrl $R && echo "MOUNT-OK" || echo "MOUNT-FAIL"
+mkdir $R/g1 && echo "MKDIR-G1-OK"
+echo "ROOT-ASSIGN-BEFORE: $(cat $R/mbm_L3_assignments 2>&1)"
+echo "G1-ASSIGN-BEFORE: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+echo 'p:domon resctrl_online_mon_domain' >> $T/kprobe_events
+echo 'p:domoff resctrl_offline_mon_domain' >> $T/kprobe_events
+echo 1 > $T/events/kprobes/enable
+echo "PM-STATES: $(cat /sys/power/state 2>&1)"
+echo "MEM-SLEEP: $(cat /sys/power/mem_sleep 2>&1)"
+echo "DISK: $(cat /sys/power/disk 2>&1)"
+echo "PM-TEST-MODES: $(cat /sys/power/pm_test 2>&1)"
+for s in freeze mem disk; do
+	# s2idle rejects pm_test=processors: it keeps every CPU online by
+	# design. QEMU's PL031 cannot wake it, so stop at the freezer stage,
+	# which is the last stage s2idle shares with the other states.
+	if [ $s = freeze ]; then
+		echo freezer > /sys/power/pm_test
+	else
+		echo processors > /sys/power/pm_test
+	fi
+	echo 1 > /sys/module/suspend/parameters/pm_test_delay 2>/dev/null
+	echo > $T/trace
+	echo $s > /sys/power/state 2>/tmp/err
+	echo "SLEEP-$s-RC: $? $(cat /tmp/err)"
+	echo "SLEEP-$s-DOMS: $(ls $R/mon_data | tr '\n' ' ')"
+	echo "SLEEP-$s-OFFLINE-CALLS: $(grep -c 'domoff:' $T/trace)"
+	echo "SLEEP-$s-ONLINE-CALLS: $(grep -c 'domon:' $T/trace)"
+	echo "SLEEP-$s-ROOT: $(cat $R/mbm_L3_assignments 2>&1)"
+	echo "SLEEP-$s-G1: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+done
+echo none > /sys/power/pm_test
+echo "DMESG-PM: $(dmesg | grep -iE 'PM: |Disabling non-boot|Enabling non-boot|CPU[0-9]+ is up|psci' | tail -12 | tr '\n' '|')"
+echo "DMESG-WARN: $(dmesg | grep -cE 'WARNING: |BUG: |Call trace:')"
+echo "=== MARKER:DONE ==="
+sleep 300
