@@ -1,0 +1,38 @@
+#!/bin/sh
+# One group, a different counter ID in each domain.
+#
+# The default group takes counter 0 and g1 counter 1. Free domain 1's
+# counters and assign g1 there again, so g1 uses counter 0 on domain 1
+# and counter 1 on domain 0. A kprobe on mpam_msmon_read() shows the
+# monitor each read uses: g1 must read monitor 1 on domain 0 and monitor
+# 0 on domain 1.
+/bin/busybox --install -s /bin 2>/dev/null
+mkdir -p /proc /sys /dev /tmp /sys/fs/resctrl
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+R=/sys/fs/resctrl
+T=/sys/kernel/tracing
+mount -t tracefs nodev $T 2>/dev/null || { mkdir -p /sys/kernel/debug; mount -t debugfs nodev /sys/kernel/debug; T=/sys/kernel/debug/tracing; }
+mount -t resctrl resctrl $R && echo "MOUNT-OK" || echo "MOUNT-FAIL"
+mkdir $R/g1 && echo "MKDIR-G1-OK" || echo "MKDIR-G1-FAIL"
+DOM0=$(ls $R/mon_data | sed -n 1p); DOM1=$(ls $R/mon_data | sed -n 2p)
+echo "DOMS: $DOM0 $DOM1"
+echo "ROOT-BEFORE: $(cat $R/mbm_L3_assignments 2>&1)"
+echo "G1-BEFORE: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+echo "mbm_total_bytes:${DOM1#mon_L3_}=_" > $R/mbm_L3_assignments && echo "ROOT-UNASSIGN-OK"
+echo "mbm_total_bytes:${DOM1#mon_L3_}=_" > $R/g1/mbm_L3_assignments && echo "G1-UNASSIGN-OK"
+echo "mbm_total_bytes:${DOM1#mon_L3_}=e" > $R/g1/mbm_L3_assignments && echo "G1-ASSIGN-OK"
+echo "ROOT-AFTER: $(cat $R/mbm_L3_assignments 2>&1)"
+echo "G1-AFTER: $(cat $R/g1/mbm_L3_assignments 2>&1)"
+echo 'p:mpamrd mpam_msmon_read comp=+0(%x0):u32 mon=+0(%x1):u32 partid=+8(%x1):u32 pmg=+4(%x1):u8' >> $T/kprobe_events
+echo "KPROBE-RC: $?"
+echo 1 > $T/events/kprobes/mpamrd/enable
+for d in $DOM0 $DOM1; do
+	echo > $T/trace
+	echo "G1-READ-$d: $(cat $R/g1/mon_data/$d/mbm_total_bytes 2>&1)"
+	echo "G1-TRACE-$d: $(grep -o 'comp=[0-9]* mon=[0-9]* partid=1 pmg=[0-9]*' $T/trace | tr '\n' ';')"
+done
+echo "DMESG-WARN: $(dmesg | grep -cE 'WARNING: |BUG: |Call trace:')"
+echo "=== MARKER:DONE ==="
+sleep 300

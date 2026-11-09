@@ -205,20 +205,31 @@ domain。用 `/sys/power/pm_test` 走真实内核路径，在
 挂起到内存（PSCI SYSTEM_SUSPEND）QEMU 不支持，没有覆盖；它同样经过
 `pm_sleep_disable_secondary_cpus()`。
 
-`--case shared`（`initrd/rootfs_abmc_shared/`）：MPAM 上的后果。default
-组拿 counter 0、g1 拿 counter 1，热插拔重建第二个 domain 后手动给 g1
-在新 domain 分配，再用 `mpam_msmon_read()` 上的 kprobe 记录每次读用的
-硬件 monitor。判定 g1 在两个 domain 都读 monitor 1、default 组读
-monitor 0。修复前手动分配给 g1 最低空闲 counter 0，MPAM 的 counter ID
-到 monitor 的映射整个资源共用，于是 g1 在两个 domain 都读 monitor 0，
-即 default 组的 monitor。
+`--case shared`（`initrd/rootfs_abmc_shared/`）：热插拔重建第二个 domain。
+default 组拿 counter 0、g1 拿 counter 1，重建后 resctrl 把组原有的 counter
+镜像到新 domain，再用 `mpam_msmon_read()` 上的 kprobe 记录每次读用的硬件
+monitor。判定 g1 在两个 domain 都读 monitor 1、default 组读 monitor 0。
+没有镜像时组在新 domain 读 Unassigned，手动分配会拿到该 domain 最低空闲的
+counter，两个 domain 的 ID 可以不同（见 `--case perdomain`）。
 
-2026-11-06 结果（父提交 `5477ee42f619` vs 分支 tip `f56e1456b2c1`）：
+`--case moveable`（`initrd/rootfs_abmc_moveable/`）：`info/moveable_mon_group`。
+RMID 依赖 CLOSID 时读到 0；同一个父目录下改名成功；移到另一个 CTRL_MON 的
+`mon_groups/` 失败（-EOPNOTSUPP），`last_cmd_status` 给出原因。
 
-| 用例 | 父提交 | tip |
+`--case perdomain`（`initrd/rootfs_abmc_perdomain/`）：同一个组在两个 domain
+用不同 counter。default 拿 0、g1 拿 1；在 domain 1 先释放 default 和 g1 再给
+g1 分配，g1 在 domain 1 拿到 counter 0。kprobe 判定 g1 在 domain 0 读
+monitor 1、在 domain 1 读 monitor 0。修复前驱动按 CLOSID/RMID 全局反查
+monitor，两个 domain 都读 monitor 0。
+
+2026-11-09 结果（修复前 vs 分支 tip `e6953e55f247`）：
+
+| 用例 | 修复前 | tip |
 |---|---|---|
 | pm / disk | 新 domain 上 root、g1 为 `=_` | `=e` |
-| shared | g1 两个 domain 都读 mon=0 | g1 两个 domain 都读 mon=1 |
+| shared | 新 domain 上组读 Unassigned | g1 两个 domain 都读 mon=1 |
+| moveable | 没有该文件 | 读到 0；同父改名 OK，跨父 EOPNOTSUPP |
+| perdomain | g1 两个 domain 都读 mon=0 | domain 0 读 mon=1、domain 1 读 mon=0 |
 
 ## MPAM 访存带宽绝对值分配（mba_MBps 软件控制器）
 

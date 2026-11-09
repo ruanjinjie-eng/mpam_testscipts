@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assignable MBM counters: sleep trigger and the MPAM shared monitor.
+"""Assignable MBM counters: sleep trigger and per-domain counters.
 
 Same topology as abmc_domain_test.py: 1 socket x 2 clusters x 2 cores,
 L3 per cluster, so two L3 monitor domains, 8 assignable counters each.
@@ -21,10 +21,19 @@ L3 per cluster, so two L3 monitor domains, 8 assignable counters each.
     The default group takes counter 0 and g1 counter 1. The second
     domain is re-created by CPU hotplug and g1 is assigned by hand on
     it. A kprobe on mpam_msmon_read() records the hardware monitor of
-    each read. g1 must read monitor 1 on both domains and the default
-    group monitor 0. Before the fix the hand assignment gives g1 the
-    lowest free counter, 0, and as MPAM maps a counter ID to one monitor
-    for the whole resource, g1 then reads monitor 0 on both domains.
+    each read. The counters are mirrored on the new domain, so g1 must
+    read monitor 1 on both domains and the default group monitor 0.
+
+--case moveable (initrd/rootfs_abmc_moveable)
+    info/moveable_mon_group must read 0 where the RMID depends on the
+    CLOSID. A rename within the same parent succeeds, while a move to
+    another parent fails with -EOPNOTSUPP and last_cmd_status says why.
+
+--case perdomain (initrd/rootfs_abmc_perdomain)
+    Give g1 counter 1 on the first domain and counter 0 on the second
+    by freeing and re-assigning it there. Each domain must read the
+    monitor of its own counter (1 and 0), which the driver selected from
+    the counter ID resctrl passed.
 
 Requires QEMU with pmg-max=1 and MBWU monitors (mpam-upstream-v4-split)
 and a kernel with CONFIG_KPROBE_EVENTS, CONFIG_HIBERNATION and
@@ -32,7 +41,7 @@ CONFIG_PM_DEBUG.
 
 Usage:
   QEMU_BIN=/path/to/qemu-system-aarch64 \
-    scripts/abmc_sleep_shared_test.py --case pm|shared [Image]
+    scripts/abmc_sleep_shared_test.py --case pm|shared|moveable|perdomain [Image]
 """
 import argparse
 import json
@@ -260,9 +269,53 @@ def checks_shared(blob):
     return res
 
 
+def checks_moveable(blob):
+    res = []
+    res.append(check("resctrl mount", "MOUNT-OK" in blob))
+    res.append(check("info/moveable_mon_group reads 0",
+                     field(blob, "MOVEABLE") == "0", field(blob, "MOVEABLE")))
+    res.append(check("control group and MON group created",
+                     "MKDIR-G1-OK" in blob and "MKDIR-M1-OK" in blob))
+    res.append(check("rename within the same parent succeeds",
+                     "SAME-PARENT-RENAME-OK" in blob))
+    res.append(check("move to another parent fails",
+                     field(blob, "MOVE-RC") == "1", field(blob, "MOVE-RC")))
+    v = field(blob, "LAST-CMD") or ""
+    res.append(check("last_cmd_status reports the reason",
+                     "Changing parent control group not supported" in v, v))
+    return res
+
+
+def checks_perdomain(blob):
+    res = []
+    res.append(check("resctrl mount", "MOUNT-OK" in blob))
+    doms = (field(blob, "DOMS") or "").split()
+    res.append(check("two monitor domains", len(doms) == 2, " ".join(doms)))
+    v = field(blob, "ROOT-AFTER") or ""
+    res.append(check("root keeps its counter on the first domain only",
+                     v.count("=e") == 1 and v.count("=_") == 1, v))
+    v = field(blob, "G1-AFTER") or ""
+    res.append(check("g1 assigned on both domains",
+                     len(re.findall(r"\d+=e", v)) == 2, v))
+    res.append(check("kprobe on mpam_msmon_read registered",
+                     field(blob, "KPROBE-RC") == "0", field(blob, "KPROBE-RC")))
+
+    dom0 = doms[0] if doms else ""
+    dom1 = doms[1] if len(doms) > 1 else ""
+    g1 = [(m, p) for m, p in monitors(blob, f"G1-TRACE-{dom0}") if p == "1"]
+    res.append(check(f"g1 reads its counter 1 monitor on {dom0}",
+                     g1 and all(m == "1" for m, _ in g1), g1))
+    g1 = [(m, p) for m, p in monitors(blob, f"G1-TRACE-{dom1}") if p == "1"]
+    res.append(check(f"g1 reads its counter 0 monitor on {dom1}",
+                     g1 and all(m == "0" for m, _ in g1), g1))
+    return res
+
+
 CASES = {
     "pm": ("rootfs_abmc_pm", checks_pm),
     "shared": ("rootfs_abmc_shared", checks_shared),
+    "moveable": ("rootfs_abmc_moveable", checks_moveable),
+    "perdomain": ("rootfs_abmc_perdomain", checks_perdomain),
 }
 
 

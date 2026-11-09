@@ -1,0 +1,26 @@
+#!/bin/sh
+# info/moveable_mon_group, and moving a MON group to another parent.
+#
+# With the RMID depending on the CLOSID, moving a MON group to another
+# CTRL_MON changes its CLOSID and the RMID index with it, so the move is
+# rejected with -EOPNOTSUPP while a rename within the same parent is
+# still allowed.
+/bin/busybox --install -s /bin 2>/dev/null
+mkdir -p /proc /sys /dev /tmp /sys/fs/resctrl
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t devtmpfs dev /dev 2>/dev/null
+R=/sys/fs/resctrl
+mount -t resctrl resctrl $R && echo "MOUNT-OK" || echo "MOUNT-FAIL"
+echo "INFO: $(ls $R/info | tr '\n' ' ')"
+echo "MOVEABLE: $(cat $R/info/moveable_mon_group 2>&1)"
+mkdir $R/g1 && echo "MKDIR-G1-OK" || echo "MKDIR-G1-FAIL"
+mkdir $R/g1/mon_groups/m1 && echo "MKDIR-M1-OK" || echo "MKDIR-M1-FAIL"
+mv $R/g1/mon_groups/m1 $R/g1/mon_groups/m2 && echo "SAME-PARENT-RENAME-OK" || echo "SAME-PARENT-RENAME-FAIL"
+mv $R/g1/mon_groups/m2 $R/mon_groups/m2 2>/tmp/e
+echo "MOVE-RC: $?"
+echo "MOVE-ERR: $(cat /tmp/e 2>&1)"
+echo "LAST-CMD: $(cat $R/info/last_cmd_status 2>&1)"
+echo "DMESG-WARN: $(dmesg | grep -cE 'WARNING: |BUG: |Call trace:')"
+echo "=== MARKER:DONE ==="
+sleep 300
